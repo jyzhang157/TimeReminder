@@ -11,10 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timereminder.base.activity.BaseActivity;
+import com.example.timereminder.core.database.TaskDatabaseHelper;
+import com.example.timereminder.core.datastructure.TaskMessage;
 
 import org.litepal.LitePal;
 
+
 public class MainActivity extends BaseActivity {
+//数据库相关，考虑移动到基类里
+    //TaskDatabaseHelper<TaskMessage> taskbase;
 
     private TextView mTextMessage;
 
@@ -43,6 +48,7 @@ public class MainActivity extends BaseActivity {
     }
 
     protected void initView() {
+        //taskbase=new TaskDatabaseHelper<TaskMessage>();
         setContentView(R.layout.activity_main);
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -51,10 +57,22 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.testbutton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LitePal.getDatabase();
+                TaskMessage tmp=new TaskMessage("读书","2019-05-09");
+                TaskDatabaseHelper.addData(tmp);
                 Toast.makeText(MainActivity.this,"create database!",Toast.LENGTH_LONG).show();
             }
         });
+        findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                TaskMessage tmp=TaskDatabaseHelper.getFirstData(TaskMessage.class);
+                if(tmp==null) return;
+                Toast.makeText(MainActivity.this,"delete data!"+tmp.getId(),Toast.LENGTH_LONG).show();
+                tmp.setLocation("上海");
+                TaskDatabaseHelper.updateData(tmp,tmp.getId());
+            }
+        }
+        );
     }
 
     protected void  initData(){

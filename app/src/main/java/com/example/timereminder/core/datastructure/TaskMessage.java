@@ -4,6 +4,7 @@ import org.litepal.crud.LitePalSupport;
 import org.litepal.exceptions.DataSupportException;
 
 public class TaskMessage extends LitePalSupport {
+    private long id;
     private String m_name;
     private String m_time;//格式为 "YYYY-MM-DD HH:MM:SS.SSS" 的日期
     private String m_description;
@@ -40,7 +41,7 @@ public class TaskMessage extends LitePalSupport {
         m_location=location;
         m_info=info;
     }
-
+    public long getId() {return id;}
     public void setName(String name){
         m_name=name;
     }
@@ -71,5 +72,9 @@ public class TaskMessage extends LitePalSupport {
 
     public String getInfo() {
         return m_info;
+    }
+
+    public boolean equals(TaskMessage obj) {
+        return (this == obj);
     }
 }
