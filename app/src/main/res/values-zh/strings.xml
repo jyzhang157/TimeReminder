@@ -5,14 +5,15 @@
     <string name="title_notifications">Notifications</string>
 
     <string-array name="english_week_string_array">
-        <item>Sun</item>
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
     </string-array>
+
     <string-array name="chinese_week_string_array">
         <item>周日</item>
         <item>周一</item>
@@ -22,4 +23,5 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
+
 </resources>
