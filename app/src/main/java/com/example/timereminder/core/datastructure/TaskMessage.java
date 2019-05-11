@@ -10,6 +10,7 @@ public class TaskMessage extends LitePalSupport {
     private String m_description;
     private String m_location;
     private String m_info;//备注
+    private boolean m_checked;
 
     public TaskMessage()
     {
@@ -41,8 +42,10 @@ public class TaskMessage extends LitePalSupport {
         m_location=location;
         m_info=info;
     }
-    public long getId() {return id;}
-    public void setName(String name){
+    public long getId() {
+        return id;
+    }
+    public void setName(String name) {
         m_name=name;
     }
     public String getName() {
@@ -69,9 +72,15 @@ public class TaskMessage extends LitePalSupport {
     public void setInfo(String info) {
         m_info=info;
     }
-
     public String getInfo() {
         return m_info;
+    }
+    public void setChecked(boolean m_checked) {
+        this.m_checked = m_checked;
+    }
+
+    public boolean isChecked() {
+        return m_checked;
     }
 
     public boolean equals(TaskMessage obj) {

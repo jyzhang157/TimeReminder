@@ -76,26 +76,26 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         this.onItemClickListener = onItemClickListener;
     }
 
-    void addAll(List<T> items) {
+    public void addAll(List<T> items) {
         if (items != null && items.size() > 0) {
             mItems.addAll(items);
             notifyItemRangeInserted(mItems.size(), items.size());
         }
     }
 
-    final void addItem(T item) {
+    public final void addItem(T item) {
         if (item != null) {
             this.mItems.add(item);
             notifyItemChanged(mItems.size());
         }
     }
 
-    final List<T> getItems() {
+    public final List<T> getItems() {
         return mItems;
     }
 
 
-    final T getItem(int position) {
+    protected final T getItem(int position) {
         if (position < 0 || position >= mItems.size())
             return null;
         return mItems.get(position);

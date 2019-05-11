@@ -23,5 +23,11 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
-
+    <string name="list_dialog_title">设置</string>
+    <string name="func_dialog_title">Function</string>
+    <string-array name="list_dialog_items">
+        <item>添加日程</item>
+        <item>隐藏详细信息</item>
+        <item>隐藏已完成</item>
+    </string-array>
 </resources>
