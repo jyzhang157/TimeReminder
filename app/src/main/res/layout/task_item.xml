@@ -34,4 +34,16 @@
         android:text="2009年02月28日"
         android:textSize="15sp"
         android:id="@+id/tv_time"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/overdue"
+        android:visibility="invisible"
+        android:text="已过期"
+        android:textSize="15sp"
+        android:id="@+id/tv_overdue"/>
 </RelativeLayout>

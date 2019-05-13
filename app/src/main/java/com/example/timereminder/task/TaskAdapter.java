@@ -1,4 +1,4 @@
-package com.example.timereminder;
+package com.example.timereminder.task;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.timereminder.R;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.core.datastructure.TaskMessage;
 
