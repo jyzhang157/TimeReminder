@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="600dp">
+    android:layout_height="600dp"
+    android:id="@+id/calendar_fragment">
 
     <include layout="@layout/layout_head_tool"/>
-
     <include layout="@layout/layout_calendar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calendar"
+        android:textSize="30sp" />
 
 </LinearLayout>

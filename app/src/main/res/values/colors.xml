@@ -6,4 +6,6 @@
 
     <color name="overdue">#FF0000</color>
     <color name="contentBackground">#FFFFFF</color>
+
+    <color name="headToolBottom">#F0F0F0</color>
 </resources>
