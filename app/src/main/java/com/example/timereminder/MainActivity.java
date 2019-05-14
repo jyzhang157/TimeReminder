@@ -1,10 +1,12 @@
 package com.example.timereminder;
 
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,7 +19,7 @@ import com.example.timereminder.pager.settingFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     private notificationFragment mNotificationFragment;
     private calendarFragment mCalendarFragment;
@@ -25,49 +27,70 @@ public class MainActivity extends BaseActivity{
     private List<Fragment> mFragmentList;
     private ViewPager mViewPager;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_setting:
-                    return true;
-                case R.id.navigation_calendar:
-                    return true;
-                case R.id.navigation_notifications:
-                    return true;
-            }
-            return false;
-        }
-    };
     @Override
-    protected  int getLayoutId(){
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
-    protected  void initView(){
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    protected void initView() {
+        setContentView(R.layout.activity_main);
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
-        ActionBar actionbar=getSupportActionBar();
-        if(actionbar!=null){
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
             actionbar.hide();
         }
-        setContentView(R.layout.activity_main);
-        mFragmentList=new ArrayList<>();
-        mFragmentList.add(mNotificationFragment=new notificationFragment());
-        mFragmentList.add(mCalendarFragment=new calendarFragment());
-        mFragmentList.add(mSettingFragment=new settingFragment());
-        FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager());
-        adapter.reset(mFragmentList);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.clearOnPageChangeListeners();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+               navigation.getMenu().getItem(position).setChecked(true);
+                Log.e("mViewPager","page"+position);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-        mViewPager =(ViewPager) findViewById(R.id.view_pager);
+            }
+        });
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(mNotificationFragment = new notificationFragment());
+        mFragmentList.add(mCalendarFragment = new calendarFragment());
+        mFragmentList.add(mSettingFragment = new settingFragment());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        adapter.reset(mFragmentList);
         mViewPager.setAdapter(adapter);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.e("mNavigation",""+item.getItemId());
+                switch (item.getItemId()) {
+
+                    case R.id.navigation_setting:
+                        mViewPager.setCurrentItem(2);
+                        Log.e("mNavigation","click setting");
+                        return true;
+                    case R.id.navigation_calendar:
+                        mViewPager.setCurrentItem(1);
+                        Log.e("mNavigation","click calendar");
+                        return true;
+                    case R.id.navigation_notifications:
+                        mViewPager.setCurrentItem(0);
+                        Log.e("mNavigation","click calendar");
+                        return true;
+                }
+                return false;
+            }
+        });
 
     }
 
-    protected  void initData(){
+    @Override
+    protected void initData(){
 
     }
 }

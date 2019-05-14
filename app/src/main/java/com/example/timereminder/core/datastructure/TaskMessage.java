@@ -10,7 +10,7 @@ public class TaskMessage extends LitePalSupport {
     private String m_description;
     private String m_location;
     private String m_info;//备注
-    private boolean m_checked;
+    private boolean m_checked;//标注事件是否完成
 
     public TaskMessage()
     {
