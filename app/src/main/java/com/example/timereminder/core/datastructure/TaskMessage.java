@@ -7,6 +7,7 @@ public class TaskMessage extends LitePalSupport {
     private long id;
     private String m_name;
     private String m_time;//格式为 "YYYY-MM-DD HH:MM:SS.SSS" 的日期
+    private String m_etime;//反映结束时间，格式同上
     private String m_description;
     private String m_location;
     private String m_info;//备注
@@ -62,6 +63,12 @@ public class TaskMessage extends LitePalSupport {
     }
     public String getTime() {
         return m_time;
+    }
+    public void setEndTime(String time){
+        m_etime=time;
+    }
+    public String getEndTime() {
+        return m_etime;
     }
     public void setLocation(String location) {
         m_location=location;

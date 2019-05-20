@@ -38,8 +38,7 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         return LitePal.where(conditions).find(modelClass);
     }
 
-    public static <E extends TaskMessage> E getFirstData(Class<E> modelClass)
-    {
+    public static <E extends TaskMessage> E getFirstData(Class<E> modelClass){
         return LitePal.findFirst(modelClass);
     }
 
@@ -52,7 +51,16 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         data.save();
     }
 
-    public static <E extends TaskMessage> void updateData(E data,long id){
+    public static <E extends TaskMessage> void updateData(E data ,long id){
         data.update(id);
+    }
+
+    public static <E extends TaskMessage> void findDataInTimeOrder(Class<E> modelClass,boolean order,String... conditions){
+        //TODO:该方法主要用来输出条件内按时间顺序排列的Task数据，其中order为true为正序（从早到晚），false为逆序
+
+    }
+
+    public static <E extends TaskMessage> void findDataWithLocation(){
+
     }
 }

@@ -21,6 +21,9 @@ public class notificationFragment extends BaseFragment {
     TextView mTextLunar;
     TextView mTextCurrentDay;
     Calendar mCalendar;
+    RecyclerView taskRecyclerView;
+    LinearLayoutManager layoutManager;
+    TaskAdapter<TaskMessage> adapter;
 
     List<TaskMessage> taskList;
 
@@ -66,10 +69,10 @@ public class notificationFragment extends BaseFragment {
         TaskMessage task9=new TaskMessage("码代码","2019-5-12 01:06:55.300");
         taskList.add(task9);
 
-        RecyclerView taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        layoutManager=new LinearLayoutManager(getContext());
         taskRecyclerView.setLayoutManager(layoutManager);
-        TaskAdapter<TaskMessage> adapter=new TaskAdapter<TaskMessage>(getContext());
+        adapter=new TaskAdapter<TaskMessage>(getContext());
         adapter.addAll(taskList);
         taskRecyclerView.setAdapter(adapter);
     }
