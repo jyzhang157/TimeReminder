@@ -30,7 +30,7 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
         h.mCheckbox.setChecked(item.isChecked());
         h.mName.setText(item.getName());
         //TODO:在这里调整显示时间的格式
-        h.mTime.setText(item.getTime());
+        h.mTime.setText(item.getTime().toString());
 
     }
 

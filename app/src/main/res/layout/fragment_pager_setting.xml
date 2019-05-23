@@ -14,4 +14,79 @@
         android:layout_height="wrap_content"
         android:text="setting"
         android:textSize="30sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/test_name_l"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="标题" />
+
+        <EditText
+            android:id="@+id/test_name"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/test_date_l"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="时间" />
+
+        <EditText
+            android:id="@+id/test_date"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:id="@+id/test_edate_l"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="结束时间" />
+
+        <EditText
+            android:id="@+id/test_edate"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/test_location_l"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="地点" />
+
+        <EditText
+            android:id="@+id/test_location"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="添加"
+            android:id="@+id/test_add_button"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="显示"
+            android:id="@+id/test_d_button"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F7F6F6"/>
+
+
+    </LinearLayout>
+
 </LinearLayout>

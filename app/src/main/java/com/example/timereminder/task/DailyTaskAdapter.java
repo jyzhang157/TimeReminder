@@ -27,8 +27,8 @@ public class DailyTaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter
         h.mName.setText(item.getName());
         h.mLocation.setText(item.getLocation());
         //TODO:在这里调整显示时间的格式
-        h.mBTime.setText(item.getTime());
-        h.mETime.setText(item.getEndTime());
+        h.mBTime.setText(item.getTime().toString());
+        h.mETime.setText(item.getEndTime().toString());
 
     }
 

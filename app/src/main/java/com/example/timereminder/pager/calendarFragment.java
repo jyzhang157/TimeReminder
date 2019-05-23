@@ -123,24 +123,24 @@ public class calendarFragment extends BaseFragment implements
 
         //设置列表
         taskList=new ArrayList<TaskMessage>();
-        TaskMessage task1=new TaskMessage("读书","2019-5-12 01:06:55.300");
-        taskList.add(task1);
-        TaskMessage task2=new TaskMessage("上学","2019-5-12 01:06:55.300");
-        taskList.add(task2);
-        TaskMessage task3=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-        taskList.add(task3);
-        TaskMessage task4=new TaskMessage("读书","2019-5-12 01:06:55.300");
-        taskList.add(task4);
-        TaskMessage task5=new TaskMessage("上学","2019-5-12 01:06:55.300");
-        taskList.add(task5);
-        TaskMessage task6=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-        taskList.add(task6);
-        TaskMessage task7=new TaskMessage("读书","2019-5-12 01:06:55.300");
-        taskList.add(task7);
-        TaskMessage task8=new TaskMessage("上学","2019-5-12 01:06:55.300");
-        taskList.add(task8);
-        TaskMessage task9=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-        taskList.add(task9);
+//        TaskMessage task1=new TaskMessage("读书","2019-5-12 01:06:55.300");
+//        taskList.add(task1);
+//        TaskMessage task2=new TaskMessage("上学","2019-5-12 01:06:55.300");
+//        taskList.add(task2);
+//        TaskMessage task3=new TaskMessage("码代码","2019-5-12 01:06:55.300");
+//        taskList.add(task3);
+//        TaskMessage task4=new TaskMessage("读书","2019-5-12 01:06:55.300");
+//        taskList.add(task4);
+//        TaskMessage task5=new TaskMessage("上学","2019-5-12 01:06:55.300");
+//        taskList.add(task5);
+//        TaskMessage task6=new TaskMessage("码代码","2019-5-12 01:06:55.300");
+//        taskList.add(task6);
+//        TaskMessage task7=new TaskMessage("读书","2019-5-12 01:06:55.300");
+//        taskList.add(task7);
+//        TaskMessage task8=new TaskMessage("上学","2019-5-12 01:06:55.300");
+//        taskList.add(task8);
+//        TaskMessage task9=new TaskMessage("码代码","2019-5-12 01:06:55.300");
+//        taskList.add(task9);
 
         taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(getContext());

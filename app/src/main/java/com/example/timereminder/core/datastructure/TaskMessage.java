@@ -3,11 +3,15 @@ package com.example.timereminder.core.datastructure;
 import org.litepal.crud.LitePalSupport;
 import org.litepal.exceptions.DataSupportException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TaskMessage extends LitePalSupport {
     private long id;
     private String m_name;
-    private String m_time;//格式为 "YYYY-MM-DD HH:MM:SS.SSS" 的日期
-    private String m_etime;//反映结束时间，格式同上
+    private Date m_time;//格式为 "YYYY-MM-DD HH:MM:SS.SSS" 的日期
+    private Date m_etime;//反映结束时间，格式同上
     private String m_description;
     private String m_location;
     private String m_info;//备注
@@ -17,25 +21,25 @@ public class TaskMessage extends LitePalSupport {
     {
 
     }
-    public TaskMessage(String name,String time)
+    public TaskMessage(String name,Date time)
     {
         m_name=name;
         m_time=time;
     }
-    public TaskMessage(String name,String time,String description)
+    public TaskMessage(String name,Date time,String description)
     {
         m_name=name;
         m_description=description;
         m_time=time;
     }
-    public TaskMessage(String name,String time,String description,String location)
+    public TaskMessage(String name,Date time,String description,String location)
     {
         m_name=name;
         m_description=description;
         m_time=time;
         m_location=location;
     }
-    public TaskMessage(String name,String time,String description,String location,String info)
+    public TaskMessage(String name,Date time,String description,String location,String info)
     {
         m_name=name;
         m_description=description;
@@ -58,18 +62,19 @@ public class TaskMessage extends LitePalSupport {
     public String getDescription() {
         return m_description;
     }
-    public void setTime(String time){
+    public void setTime(Date time){
         m_time=time;
     }
-    public String getTime() {
+    public Date getTime() {
         return m_time;
     }
-    public void setEndTime(String time){
+    public void setEndTime(Date time){
         m_etime=time;
     }
-    public String getEndTime() {
+    public Date getEndTime() {
         return m_etime;
     }
+
     public void setLocation(String location) {
         m_location=location;
     }
@@ -85,7 +90,6 @@ public class TaskMessage extends LitePalSupport {
     public void setChecked(boolean m_checked) {
         this.m_checked = m_checked;
     }
-
     public boolean isChecked() {
         return m_checked;
     }

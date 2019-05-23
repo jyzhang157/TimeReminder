@@ -4,6 +4,7 @@ import com.example.timereminder.core.datastructure.TaskMessage;
 
 import org.litepal.LitePal;
 
+import java.util.Date;
 import java.util.List;
 
 public class TaskDatabaseHelper<E extends TaskMessage> {
@@ -33,7 +34,7 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         return LitePal.findAll(modelClass);
     }
 
-    public static <E extends TaskMessage> List<E> readData(Class<E> modelClass,String... conditions){
+    public static <E extends TaskMessage> List<E> findData(Class<E> modelClass,String... conditions){
         //TODO:读取想要的数据，需要思考用什么形式实现，目前考虑使用数据库中的查询形式
         return LitePal.where(conditions).find(modelClass);
     }
@@ -55,12 +56,39 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         data.update(id);
     }
 
-    public static <E extends TaskMessage> void findDataInTimeOrder(Class<E> modelClass,boolean order,String... conditions){
+    public static <E extends TaskMessage>
+    List<E> getAllDataInTimeOrder(
+            Class<E> modelClass,
+            boolean order){
+        //TODO:该方法主要用来输出所有按时间顺序排列的Task数据，其中order为true为正序（从早到晚），false为逆序
+        if(order)
+            return LitePal.order("m_time asc").find(modelClass);
+        else
+            return LitePal.order("m_time desc").find(modelClass);
+    }
+
+    public static <E extends TaskMessage>
+    List<E> findDataInTimeOrder(
+            Class<E> modelClass,
+            Date historyDate,
+            Date futureDate,
+            boolean order){
         //TODO:该方法主要用来输出条件内按时间顺序排列的Task数据，其中order为true为正序（从早到晚），false为逆序
-
+        List<E> taskList;
+        if(order)
+            taskList= LitePal.order("m_time asc").find(modelClass);
+        else
+            taskList= LitePal.order("m_time desc").find(modelClass);
+        for(int i=0;i<taskList.size();i++){
+            Date time=taskList.get(i).getTime();
+            if(time.before(historyDate)||time.after(futureDate));
+                taskList.remove(i);
+        }
+        return taskList;
     }
 
-    public static <E extends TaskMessage> void findDataWithLocation(){
-
+    public static <E extends TaskMessage> List<E> findDataWithLocation(Class<E> modelClass,String location){
+        return LitePal.where("m_location like",location).order("m_time asc").find(modelClass);
     }
+
 }

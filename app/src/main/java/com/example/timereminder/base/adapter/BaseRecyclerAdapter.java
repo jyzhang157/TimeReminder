@@ -131,7 +131,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         }
     }
 
-    protected final void clear(){
+    public final void clear(){
         mItems.clear();
         notifyDataSetChanged();
     }

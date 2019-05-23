@@ -1,16 +1,18 @@
 package com.example.timereminder.core.datastructure;
 
+import java.util.Date;
+
 public class ExpressMessage extends TaskMessage {
     private int m_code;//存储取件码
     private String m_expressCompany;//快递公司
 
-    public ExpressMessage(String name,String time,int code,String company){
+    public ExpressMessage(String name, Date time, int code, String company){
         super(name,time);
         m_code=code;
         m_expressCompany=company;
     }
 
-    public ExpressMessage(String name,String time,int code,String company,String location){
+    public ExpressMessage(String name,Date time,int code,String company,String location){
         super(name,time);
         m_code=code;
         m_expressCompany=company;
