@@ -1,5 +1,7 @@
 package com.example.timereminder.core.database;
 
+import android.util.Log;
+
 import com.example.timereminder.core.datastructure.TaskMessage;
 
 import org.litepal.LitePal;
@@ -81,8 +83,10 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
             taskList= LitePal.order("m_time desc").find(modelClass);
         for(int i=0;i<taskList.size();i++){
             Date time=taskList.get(i).getTime();
-            if(time.before(historyDate)||time.after(futureDate));
+            if(time.before(historyDate)||time.after(futureDate)) {
+                Log.e("筛选时间",time.toString());
                 taskList.remove(i);
+            }
         }
         return taskList;
     }

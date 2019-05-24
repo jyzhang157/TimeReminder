@@ -28,7 +28,7 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
         TaskViewHolder h= (TaskViewHolder) holder;
         E task=mItems.get(position);
         h.mCheckbox.setChecked(item.isChecked());
-        h.mName.setText(item.getName());
+        h.mName.setText(item.getName()+item.getId());
         //TODO:在这里调整显示时间的格式
         h.mTime.setText(item.getTime().toString());
 
