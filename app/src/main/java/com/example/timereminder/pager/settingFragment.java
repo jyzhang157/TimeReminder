@@ -1,8 +1,10 @@
 package com.example.timereminder.pager;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,8 +13,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.timereminder.R;
+import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
 import com.example.timereminder.core.database.TaskDatabaseHelper;
 import com.example.timereminder.core.datastructure.TaskMessage;
@@ -28,7 +32,9 @@ import java.util.List;
 
 public class settingFragment extends BaseFragment implements
          DatePickerFragment.OnGetDate,
-         TimePickerFragment.OnGetTime{
+         TimePickerFragment.OnGetTime
+         //View.OnClickListener
+        {
 
     EditText mName;
     EditText mDate;
@@ -58,6 +64,26 @@ public class settingFragment extends BaseFragment implements
         layoutManager=new LinearLayoutManager(getContext());
         taskRecyclerView.setLayoutManager(layoutManager);
         adapter=new TaskAdapter<TaskMessage>(getContext());
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, long itemId) {
+                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+//                            .setTitle(R.string.list_dialog_title)
+                    .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                            }
+                        }
+                    })
+                    .create();
+        mMoreDialog.show();
+            }
+        });
         adapter.addAll(taskList);
         taskRecyclerView.setAdapter(adapter);
 
@@ -164,4 +190,23 @@ public class settingFragment extends BaseFragment implements
         mTime.setText(Integer.toString(hourOfDay)
                 +":"+Integer.toString(minute));
     }
+
+//    public void onClick(View v){
+//        int itemPosition=taskRecyclerView.getChildLayoutPosition(v);
+//            AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+////                            .setTitle(R.string.list_dialog_title)
+//                    .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            switch (which) {
+//                                case 0:
+//                                    break;
+//                                case 1:
+//                                    break;
+//                            }
+//                        }
+//                    })
+//                    .create();
+//        mMoreDialog.show();
+//    }
 }

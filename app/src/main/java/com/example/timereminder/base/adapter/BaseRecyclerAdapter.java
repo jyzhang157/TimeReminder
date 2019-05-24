@@ -72,7 +72,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return mItems.size();
     }
 
-    void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -112,7 +112,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     }
 
 
-    interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(int position, long itemId);
     }
 

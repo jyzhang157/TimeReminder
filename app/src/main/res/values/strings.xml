@@ -29,4 +29,9 @@
         <item>隐藏详细信息</item>
         <item>隐藏已完成</item>
     </string-array>
+
+    <string-array name="list_on_task">
+        <item>编辑</item>
+        <item>删除</item>
+    </string-array>
 </resources>

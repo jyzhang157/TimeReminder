@@ -12,6 +12,7 @@ import com.haibin.calendarview.CalendarView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class notificationFragment extends BaseFragment {
@@ -50,24 +51,43 @@ public class notificationFragment extends BaseFragment {
 
         //TODO:添加一些基本的事件类型，用于测试显示列表，后续注意删除
         taskList=new ArrayList<TaskMessage>();
-//        TaskMessage task1=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task1);
-//        TaskMessage task2=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task2);
-//        TaskMessage task3=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task3);
-//        TaskMessage task4=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task4);
-//        TaskMessage task5=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task5);
-//        TaskMessage task6=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task6);
-//        TaskMessage task7=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task7);
-//        TaskMessage task8=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task8);
-//        TaskMessage task9=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task9);
+        Date date=new Date(0,1,1);
+        TaskMessage task1=new TaskMessage("读书",date);
+        taskList.add(task1);
+        TaskMessage task2=new TaskMessage("上学",date);
+        taskList.add(task2);
+        TaskMessage task3=new TaskMessage("码代码",date);
+        taskList.add(task3);
+        TaskMessage task4=new TaskMessage("读书",date);
+        taskList.add(task4);
+        TaskMessage task5=new TaskMessage("上学",date);
+        taskList.add(task5);
+        TaskMessage task6=new TaskMessage("码代码",date);
+        taskList.add(task6);
+        TaskMessage task7=new TaskMessage("读书",date);
+        taskList.add(task7);
+        TaskMessage task8=new TaskMessage("上学",date);
+        taskList.add(task8);
+        TaskMessage task9=new TaskMessage("码代码",date);
+        taskList.add(task9);
+        TaskMessage task11=new TaskMessage("读书",date);
+        taskList.add(task11);
+        TaskMessage task12=new TaskMessage("上学",date);
+        taskList.add(task12);
+        TaskMessage task13=new TaskMessage("码代码",date);
+        taskList.add(task13);
+        TaskMessage task14=new TaskMessage("读书",date);
+        taskList.add(task14);
+        TaskMessage task15=new TaskMessage("上学",date);
+        taskList.add(task15);
+        TaskMessage task16=new TaskMessage("码代码",date);
+        taskList.add(task16);
+        TaskMessage task17=new TaskMessage("读书",date);
+        taskList.add(task17);
+        TaskMessage task18=new TaskMessage("上学",date);
+        taskList.add(task18);
+        TaskMessage task19=new TaskMessage("码代码",date);
+        taskList.add(task19);
 
         taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(getContext());

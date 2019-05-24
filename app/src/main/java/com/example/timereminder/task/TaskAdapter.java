@@ -15,12 +15,17 @@ import java.util.List;
 
 public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
 
+    View.OnClickListener mOnClickListener;
+
     public TaskAdapter(Context context){
         super(context);
     }
     @Override
     protected RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type){
-        return new TaskViewHolder(mInflater.inflate(R.layout.task_item, parent, false));
+        View view=mInflater.inflate(R.layout.task_item, parent, false);
+//        if(mOnClickListener!=null)
+//            view.setOnClickListener(mOnClickListener);
+        return new TaskViewHolder(view);
     }
 
     @Override
@@ -28,7 +33,7 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
         TaskViewHolder h= (TaskViewHolder) holder;
         E task=mItems.get(position);
         h.mCheckbox.setChecked(item.isChecked());
-        h.mName.setText(item.getName()+item.getId());
+        h.mName.setText(item.getName());
         //TODO:在这里调整显示时间的格式
         h.mTime.setText(item.getTime().toString());
 
@@ -46,5 +51,7 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
             mTime=(TextView) view.findViewById(R.id.tv_time);
         }
     }
-
+//    public void setOnClickListener(View.OnClickListener listener){
+//        this.mOnClickListener=listener;
+//    }
 }
