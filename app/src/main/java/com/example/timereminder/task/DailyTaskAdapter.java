@@ -1,6 +1,7 @@
 package com.example.timereminder.task;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,15 @@ public class DailyTaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter
     protected void onBindViewHolder(RecyclerView.ViewHolder holder, E item, int position) {
         TaskViewHolder h= (TaskViewHolder) holder;
         E task=mItems.get(position);
-        h.mName.setText(item.getName());
-        h.mLocation.setText(item.getLocation());
+        if(null!=item.getName())
+            h.mName.setText(item.getName()+ " "+Long.toString(item.getId()));
+        if(null!=item.getLocation())
+            h.mLocation.setText(item.getLocation());
         //TODO:在这里调整显示时间的格式
-        h.mBTime.setText(item.getTime().toString());
-        h.mETime.setText(item.getEndTime().toString());
+        if(null!=item.getTime())
+            h.mBTime.setText(item.getTime().toString());
+        if(null!=item.getEndTime())
+            h.mETime.setText(item.getEndTime().toString());
 
     }
 

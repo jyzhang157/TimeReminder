@@ -34,4 +34,6 @@
         <item>编辑</item>
         <item>删除</item>
     </string-array>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

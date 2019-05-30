@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timereminder.R;
 import com.example.timereminder.base.fragment.BaseFragment;
+import com.example.timereminder.core.database.TaskDatabaseHelper;
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.task.DailyTaskAdapter;
 import com.example.timereminder.task.TaskAdapter;
@@ -22,7 +24,10 @@ import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 import com.haibin.calendarview.TrunkBranchAnnals;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class calendarFragment extends BaseFragment implements
@@ -45,7 +50,7 @@ public class calendarFragment extends BaseFragment implements
     private int mYear;
     CalendarLayout mCalendarLayout;
     private AlertDialog mMoreDialog;
-    private AlertDialog mFuncDialog;
+    private ImageView mFuncImage;
 
     RecyclerView taskRecyclerView;
     LinearLayoutManager layoutManager;
@@ -106,6 +111,16 @@ public class calendarFragment extends BaseFragment implements
             }
         });
 
+        mRootView.findViewById(R.id.iv_func).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCalendarView.scrollToCurrent();
+                taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
+                adapter.clear();
+                adapter.addAll(taskList);
+            }
+        });
+
         mCalendarLayout = (CalendarLayout) mRootView.findViewById(R.id.calendarLayout);
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnCalendarSelectListener(this);
@@ -123,36 +138,19 @@ public class calendarFragment extends BaseFragment implements
 
         //设置列表
         taskList=new ArrayList<TaskMessage>();
-//        TaskMessage task1=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task1);
-//        TaskMessage task2=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task2);
-//        TaskMessage task3=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task3);
-//        TaskMessage task4=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task4);
-//        TaskMessage task5=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task5);
-//        TaskMessage task6=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task6);
-//        TaskMessage task7=new TaskMessage("读书","2019-5-12 01:06:55.300");
-//        taskList.add(task7);
-//        TaskMessage task8=new TaskMessage("上学","2019-5-12 01:06:55.300");
-//        taskList.add(task8);
-//        TaskMessage task9=new TaskMessage("码代码","2019-5-12 01:06:55.300");
-//        taskList.add(task9);
-
-        taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
+        taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view_calendar);
         layoutManager=new LinearLayoutManager(getContext());
         taskRecyclerView.setLayoutManager(layoutManager);
         adapter=new DailyTaskAdapter<TaskMessage>(getContext());
-        adapter.addAll(taskList);
+        //adapter.addAll(taskList);
         taskRecyclerView.setAdapter(adapter);
     }
 
     @Override
     protected  void initData(){
-
+        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
+        adapter.clear();
+        adapter.addAll(taskList);
     }
 
     @Override
@@ -171,17 +169,20 @@ public class calendarFragment extends BaseFragment implements
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
         if (isClick) {
-            Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();
+            taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
+            adapter.clear();
+            adapter.addAll(taskList);
+//            Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();
         }
 //        Log.e("lunar "," --  " + calendar.getLunarCalendar().toString() + "\n" +
 //        "  --  " + calendar.getLunarCalendar().getYear());
-        Log.e("onDateSelected", "  -- " + calendar.getYear() +
-                "  --  " + calendar.getMonth() +
-                "  -- " + calendar.getDay() +
-                "  --  " + isClick + "  --   " + calendar.getScheme());
-        Log.e("onDateSelected", "  " + mCalendarView.getSelectedCalendar().getScheme() +
-                "  --  " + mCalendarView.getSelectedCalendar().isCurrentDay());
-        Log.e("干支年纪 ： ", " -- " + TrunkBranchAnnals.getTrunkBranchYear(calendar.getLunarCalendar().getYear()));
+//        Log.e("onDateSelected", "  -- " + calendar.getYear() +
+//                "  --  " + calendar.getMonth() +
+//                "  -- " + calendar.getDay() +
+//                "  --  " + isClick + "  --   " + calendar.getScheme());
+//        Log.e("onDateSelected", "  " + mCalendarView.getSelectedCalendar().getScheme() +
+//                "  --  " + mCalendarView.getSelectedCalendar().isCurrentDay());
+//        Log.e("干支年纪 ： ", " -- " + TrunkBranchAnnals.getTrunkBranchYear(calendar.getLunarCalendar().getYear()));
     }
 
     @Override
@@ -191,18 +192,18 @@ public class calendarFragment extends BaseFragment implements
 
     @Override
     public void onCalendarLongClick(Calendar calendar) {
-        Toast.makeText(getContext(), "长按不选择日期\n" + getCalendarText(calendar), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "长按不选择日期\n" + getCalendarText(calendar), Toast.LENGTH_SHORT).show();
     }
 
-    private static String getCalendarText(Calendar calendar) {
-        return String.format("新历%s \n 农历%s \n 公历节日：%s \n 农历节日：%s \n 节气：%s \n 是否闰月：%s",
-                calendar.getMonth() + "月" + calendar.getDay() + "日",
-                calendar.getLunarCalendar().getMonth() + "月" + calendar.getLunarCalendar().getDay() + "日",
-                TextUtils.isEmpty(calendar.getGregorianFestival()) ? "无" : calendar.getGregorianFestival(),
-                TextUtils.isEmpty(calendar.getTraditionFestival()) ? "无" : calendar.getTraditionFestival(),
-                TextUtils.isEmpty(calendar.getSolarTerm()) ? "无" : calendar.getSolarTerm(),
-                calendar.getLeapMonth() == 0 ? "否" : String.format("闰%s月", calendar.getLeapMonth()));
-    }
+//    private static String getCalendarText(Calendar calendar) {
+//        return String.format("新历%s \n 农历%s \n 公历节日：%s \n 农历节日：%s \n 节气：%s \n 是否闰月：%s",
+//                calendar.getMonth() + "月" + calendar.getDay() + "日",
+//                calendar.getLunarCalendar().getMonth() + "月" + calendar.getLunarCalendar().getDay() + "日",
+//                TextUtils.isEmpty(calendar.getGregorianFestival()) ? "无" : calendar.getGregorianFestival(),
+//                TextUtils.isEmpty(calendar.getTraditionFestival()) ? "无" : calendar.getTraditionFestival(),
+//                TextUtils.isEmpty(calendar.getSolarTerm()) ? "无" : calendar.getSolarTerm(),
+//                calendar.getLeapMonth() == 0 ? "否" : String.format("闰%s月", calendar.getLeapMonth()));
+//    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -258,7 +259,6 @@ public class calendarFragment extends BaseFragment implements
         mTextMonthDay.setText(String.valueOf(year));
         Log.e("onYearChange", " 年份变化 " + year);
     }
-
 
 
 }

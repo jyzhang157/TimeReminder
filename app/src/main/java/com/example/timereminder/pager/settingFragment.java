@@ -109,11 +109,11 @@ public class settingFragment extends BaseFragment implements
                 Date etime;
                 String location;
                 name=mName.getText().toString();
-                time=convertStringToDate(mDate.getText().toString());
-                etime=convertStringToDate(mTime.getText().toString());
+                time=convertStringToDate(mDate.getText().toString()+" "+mTime.getText().toString());
+                //etime=convertStringToDate(mTime.getText().toString());
                 location=mLocation.getText().toString();
                 TaskMessage task=new TaskMessage(name,time);
-                task.setEndTime(etime);
+                //task.setEndTime(etime);
                 task.setLocation(location);
                 TaskDatabaseHelper.addData(task);
                 updateRecycleView();
@@ -133,13 +133,13 @@ public class settingFragment extends BaseFragment implements
 
     @Override
     protected  void initData(){
-        adapter.clear();
-        Date historyDate,futureDate;
-        historyDate=new Date((1990-1900),(1-1),1);
-        futureDate=new Date((2000-1900),(1-1),1);
-        Log.e("筛选条件","开始时间"+historyDate.toString()+"结束时间"+futureDate.toString());
-        taskList=TaskDatabaseHelper.findDataInTimeOrder(TaskMessage.class,historyDate,futureDate,true);
-        adapter.addAll(taskList);
+//        adapter.clear();
+//        Date historyDate,futureDate;
+//        historyDate=new Date((1990-1900),(1-1),1);
+//        futureDate=new Date((2000-1900),(1-1),1);
+//        Log.e("筛选条件","开始时间"+historyDate.toString()+"结束时间"+futureDate.toString());
+//        taskList=TaskDatabaseHelper.findDataInTimeOrder(TaskMessage.class,historyDate,futureDate,true);
+//        adapter.addAll(taskList);
 
     }
     //再添加数据后，根据数据库更新显示列表
@@ -147,7 +147,7 @@ public class settingFragment extends BaseFragment implements
     private void updateRecycleView(){
         Date historyDate,futureDate;
         historyDate=new Date((1990-1900),(1-1),1);
-        futureDate=new Date((2000-1900),(1-1),1);
+        futureDate=new Date((2100-1900),(1-1),1);
         taskList=TaskDatabaseHelper.findDataInTimeOrder(TaskMessage.class,historyDate,futureDate,true);
         Log.e("update data",Integer.toString(taskList.size()));
         adapter.clear();
@@ -182,13 +182,13 @@ public class settingFragment extends BaseFragment implements
 
     public void getDate(int year, int month, int day){
         mDate.setText(Integer.toString(year)
-                +"-"+Integer.toString(month)
-                +"-"+Integer.toString(day));
+                +"-"+String.format("%02d",month)
+                +"-"+String.format("%02d",day));
     }
 
     public void getTime(int hourOfDay, int minute){
-        mTime.setText(Integer.toString(hourOfDay)
-                +":"+Integer.toString(minute));
+        mTime.setText(String.format("%02d",hourOfDay)
+                +":"+String.format("%02d",minute));
     }
 
 //    public void onClick(View v){

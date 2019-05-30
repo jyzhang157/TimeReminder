@@ -3,6 +3,7 @@ package com.example.timereminder.core.database;
 import android.util.Log;
 
 import com.example.timereminder.core.datastructure.TaskMessage;
+import com.haibin.calendarview.Calendar;
 
 import org.litepal.LitePal;
 
@@ -84,15 +85,24 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         for(int i=0;i<taskList.size();i++){
             Date time=taskList.get(i).getTime();
             if(time.before(historyDate)||time.after(futureDate)) {
-                Log.e("筛选时间",time.toString());
+                Log.e("当前时间",time.toString());
                 taskList.remove(i);
+                i--;
             }
         }
+        //Log.e("筛选时间",taskList.toString());
         return taskList;
     }
 
     public static <E extends TaskMessage> List<E> findDataWithLocation(Class<E> modelClass,String location){
         return LitePal.where("m_location like",location).order("m_time asc").find(modelClass);
     }
-
+    //返回当前日期的任务
+    public static <E extends TaskMessage> List<E> findOneDayDate(Class<E> modelClass,Calendar date){
+        Log.e("筛选条件",date.toString());
+        Date historyDate=new Date(date.getYear()-1900,date.getMonth()-1,date.getDay(),0,0,0);
+        Date futureDate=new Date(date.getYear()-1900,date.getMonth()-1,date.getDay(),23,59,59);
+        Log.e("筛选条件",historyDate.toString()+futureDate.toString());
+        return findDataInTimeOrder(modelClass,historyDate,futureDate,true);
+    }
 }
