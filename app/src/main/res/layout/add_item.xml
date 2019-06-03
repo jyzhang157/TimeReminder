@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    #顶部标题栏
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F1F0F0">
+
+            <ImageButton
+                android:id="@+id/button_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clear_black_24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#00000000"/>
+
+            <TextView
+                android:id="@+id/textview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text="新建活动"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                />
+
+            <ImageButton
+                android:id="@+id/button_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_done_black_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="#00000000"
+                />
+
+        </RelativeLayout>
+        #事件信息
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/line_not_full"
+            android:showDividers="middle|end"
+            android:orientation="vertical">
+            #事件标题
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp">
+
+                <EditText
+                    android:id="@+id/edittext_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:hint="请输入事件标题"
+                    android:textSize="16dp"
+                    android:background="@null"/>
+            </LinearLayout>
+            #起止时间
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/inline_not_full"
+                android:orientation="vertical"
+                android:showDividers="middle">
+                #开始时间
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/ic_access_time_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text=" 开始时间"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></TextView>
+
+                    <TextView
+                        android:id="@+id/textview_start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:text="2019年10月16日" />
+
+                    <TextView
+                        android:id="@+id/textview_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/shape_button"
+                        android:text="13:15" />
+
+
+                </LinearLayout>
+                #结束时间
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text=" 结束时间"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></TextView>
+
+                    <TextView
+                        android:id="@+id/textview_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:text="2019年11月16日" />
+
+                    <TextView
+                        android:id="@+id/textview_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/shape_button"
+                        android:text="13:40" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            #地点
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_location_on_black_24dp"
+                    android:layout_marginLeft="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" 地点："
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>/>
+                <EditText
+                    android:id="@+id/edittext_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:hint="请输入地点"
+                    android:textSize="16dp"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            #提醒设置
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_alarm_black_24dp"
+                    android:layout_marginLeft="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" 提醒"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    ></TextView>
+
+                <Spinner
+                    android:id="@+id/spinner_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="#534F4F"
+                    android:layout_weight="1"
+                    android:entries="@array/spingarr"></Spinner>
+            </LinearLayout>
+            #快递取货码
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout_express">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="1dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/express_24"
+                        android:layout_marginLeft="20dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=" 快递"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <Switch
+                        android:id="@+id/switch_express"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp">
+                    <EditText
+                        android:id="@+id/edittext_express_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="请输入取货码"
+                        android:textSize="16dp"
+                        android:visibility="gone"
+                        android:background="@null"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            #备注
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="备注："
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"/>
+                <EditText
+                    android:id="@+id/edittext_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:hint="请输入备注"
+                    android:textSize="16dp"
+                    android:background="@null"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    #编辑和删除
+    <RelativeLayout
+        android:id="@+id/layout_buttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F1F0F0"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_edit"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_button"
+                android:drawableTop="@drawable/ic_mode_edit_black_24dp"
+                android:text="编辑"
+                android:textSize="12dp"/>
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_button"
+                android:drawableTop="@drawable/ic_delete_black_24dp"
+                android:text="删除"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
