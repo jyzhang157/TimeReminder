@@ -57,8 +57,9 @@ public class MainActivity extends BaseActivity {
                     case 1:
                         mCalendarFragment.updateDate();
                         break;
-                    case 2:
-                        break;
+                        //TODO:setting
+                    //case 2:
+                        //break;
                 }
                 Log.e("mViewPager","page"+position);
             }
@@ -70,7 +71,8 @@ public class MainActivity extends BaseActivity {
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mNotificationFragment = new notificationFragment());
         mFragmentList.add(mCalendarFragment = new calendarFragment());
-        mFragmentList.add(mSettingFragment = new settingFragment());
+        //TODO:setting
+        //.add(mSettingFragment = new settingFragment());
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.reset(mFragmentList);
         mViewPager.setAdapter(adapter);
@@ -80,11 +82,11 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.e("mNavigation",""+item.getItemId());
                 switch (item.getItemId()) {
-
-                    case R.id.navigation_setting:
-                        mViewPager.setCurrentItem(2);
-                        Log.e("mNavigation","click setting");
-                        return true;
+//             TODO:setting
+//                    case R.id.navigation_setting:
+//                        mViewPager.setCurrentItem(2);
+//                        Log.e("mNavigation","click setting");
+//                        return true;
                     case R.id.navigation_calendar:
                         mViewPager.setCurrentItem(1);
                         Log.e("mNavigation","click calendar");
