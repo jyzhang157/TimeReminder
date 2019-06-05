@@ -10,14 +10,27 @@
     tools:context=".MainActivity"
     tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
 
-
-
-   <android.support.v4.view.ViewPager
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-       android:layout_weight="1"
-        android:id="@+id/view_pager">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/view_pager">
+        </android.support.v4.view.ViewPager>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_add"/>
+
+    </FrameLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -29,5 +42,7 @@
         app:menu="@menu/navigation"
         app:itemIconTint="@drawable/ic_navigation_color"
         app:itemTextColor="@drawable/ic_navigation_color"/>
+
+
 
 </LinearLayout>

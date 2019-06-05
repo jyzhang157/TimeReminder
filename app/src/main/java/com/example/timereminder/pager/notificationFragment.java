@@ -1,16 +1,21 @@
 package com.example.timereminder.pager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.timereminder.AddActivity;
 import com.example.timereminder.AddTaskActivity;
 import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
+import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
+import com.example.timereminder.core.database.TaskDatabaseHelper;
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.task.TaskAdapter;
 import com.haibin.calendarview.CalendarView;
@@ -61,44 +66,6 @@ public class notificationFragment extends BaseFragment {
 
         //TODO:添加一些基本的事件类型，用于测试显示列表，后续注意删除
         taskList=new ArrayList<TaskMessage>();
-//        Date date=new Date(0,1,1);
-//        TaskMessage task1=new TaskMessage("读书",date);
-//        taskList.add(task1);
-//        TaskMessage task2=new TaskMessage("上学",date);
-//        taskList.add(task2);
-//        TaskMessage task3=new TaskMessage("码代码",date);
-//        taskList.add(task3);
-//        TaskMessage task4=new TaskMessage("读书",date);
-//        taskList.add(task4);
-//        TaskMessage task5=new TaskMessage("上学",date);
-//        taskList.add(task5);
-//        TaskMessage task6=new TaskMessage("码代码",date);
-//        taskList.add(task6);
-//        TaskMessage task7=new TaskMessage("读书",date);
-//        taskList.add(task7);
-//        TaskMessage task8=new TaskMessage("上学",date);
-//        taskList.add(task8);
-//        TaskMessage task9=new TaskMessage("码代码",date);
-//        taskList.add(task9);
-//        TaskMessage task11=new TaskMessage("读书",date);
-//        taskList.add(task11);
-//        TaskMessage task12=new TaskMessage("上学",date);
-//        taskList.add(task12);
-//        TaskMessage task13=new TaskMessage("码代码",date);
-//        taskList.add(task13);
-//        TaskMessage task14=new TaskMessage("读书",date);
-//        taskList.add(task14);
-//        TaskMessage task15=new TaskMessage("上学",date);
-//        taskList.add(task15);
-//        TaskMessage task16=new TaskMessage("码代码",date);
-//        taskList.add(task16);
-//        TaskMessage task17=new TaskMessage("读书",date);
-//        taskList.add(task17);
-//        TaskMessage task18=new TaskMessage("上学",date);
-//        taskList.add(task18);
-//        TaskMessage task19=new TaskMessage("码代码",date);
-//        taskList.add(task19);
-
         taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
         layoutManager=new LinearLayoutManager(getContext());
         taskRecyclerView.setLayoutManager(layoutManager);
@@ -106,29 +73,61 @@ public class notificationFragment extends BaseFragment {
         adapter.addAll(taskList);
         taskRecyclerView.setAdapter(adapter);
 
-        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), AddTaskActivity.class);
-                startActivityForResult(intent,1);
+            public void onItemClick(final int position, long itemId) {
+                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+//                            .setTitle(R.string.list_dialog_title)
+                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        taskList.get(position).delete();
+                                        taskList.remove(position);
+                                        adapter.clear();
+                                        adapter.addAll(taskList);
+                                        break;
+                                }
+                            }
+                        })
+                        .create();
+                mMoreDialog.show();
             }
         });
+//        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(getActivity(), AddActivity.class);
+//                startActivityForResult(intent,1);
+//            }
+//        });
     }
 
     @Override
     protected  void initData(){
+        taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
+        adapter.clear();
+        adapter.addAll(taskList);
     }
 //TODO:这里用于接受添加任务活动的返回值
-    @Override
-    public void onActivityResult(int requestCode, int resultCode , Intent data){
-        switch (requestCode){
-            case 1:
-                if(resultCode==RESULT_OK) {
-                    String returnedData = data.getStringExtra("data_return");
-                    Log.d("MainActivity", returnedData);
-                }
-                break;
-            default:
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode , Intent data){
+//        switch (requestCode){
+//            case 1:
+//                if(resultCode==RESULT_OK) {
+//                    String returnedData = data.getStringExtra("item_return");
+//                    Log.d("show time", returnedData);
+//                }
+//                break;
+//            default:
+//        }
+//    }
+public void updateDate(){
+    taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
+    adapter.clear();
+    adapter.addAll(taskList);
+}
 }

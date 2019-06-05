@@ -1,4 +1,4 @@
-package com.example.activitytest;
+package com.example.timereminder;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

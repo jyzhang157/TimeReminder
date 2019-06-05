@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timereminder.R;
+import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
 import com.example.timereminder.core.database.TaskDatabaseHelper;
 import com.example.timereminder.core.datastructure.TaskMessage;
@@ -143,6 +144,30 @@ public class calendarFragment extends BaseFragment implements
         taskRecyclerView.setLayoutManager(layoutManager);
         adapter=new DailyTaskAdapter<TaskMessage>(getContext());
         //adapter.addAll(taskList);
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(final int position, long itemId) {
+                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+//                            .setTitle(R.string.list_dialog_title)
+                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        taskList.get(position).delete();
+                                        taskList.remove(position);
+                                        adapter.clear();
+                                        adapter.addAll(taskList);
+                                        break;
+                                }
+                            }
+                        })
+                        .create();
+                mMoreDialog.show();
+            }
+        });
         taskRecyclerView.setAdapter(adapter);
     }
 
@@ -168,12 +193,10 @@ public class calendarFragment extends BaseFragment implements
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
-        if (isClick) {
-            taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
-            adapter.clear();
-            adapter.addAll(taskList);
-//            Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();
-        }
+        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
+        adapter.clear();
+        adapter.addAll(taskList);
+//            Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();// }
 //        Log.e("lunar "," --  " + calendar.getLunarCalendar().toString() + "\n" +
 //        "  --  " + calendar.getLunarCalendar().getYear());
 //        Log.e("onDateSelected", "  -- " + calendar.getYear() +
@@ -195,15 +218,6 @@ public class calendarFragment extends BaseFragment implements
 //        Toast.makeText(getContext(), "长按不选择日期\n" + getCalendarText(calendar), Toast.LENGTH_SHORT).show();
     }
 
-//    private static String getCalendarText(Calendar calendar) {
-//        return String.format("新历%s \n 农历%s \n 公历节日：%s \n 农历节日：%s \n 节气：%s \n 是否闰月：%s",
-//                calendar.getMonth() + "月" + calendar.getDay() + "日",
-//                calendar.getLunarCalendar().getMonth() + "月" + calendar.getLunarCalendar().getDay() + "日",
-//                TextUtils.isEmpty(calendar.getGregorianFestival()) ? "无" : calendar.getGregorianFestival(),
-//                TextUtils.isEmpty(calendar.getTraditionFestival()) ? "无" : calendar.getTraditionFestival(),
-//                TextUtils.isEmpty(calendar.getSolarTerm()) ? "无" : calendar.getSolarTerm(),
-//                calendar.getLeapMonth() == 0 ? "否" : String.format("闰%s月", calendar.getLeapMonth()));
-//    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -212,10 +226,10 @@ public class calendarFragment extends BaseFragment implements
         Calendar calendar = mCalendarView.getSelectedCalendar();
         mTextLunar.setVisibility(View.VISIBLE);
         mTextYear.setVisibility(View.VISIBLE);
-        mTextMonthDay.setText(calendar.getMonth() + "月" + calendar.getDay() + "日");
-        mTextYear.setText(String.valueOf(calendar.getYear()));
-        mTextLunar.setText(calendar.getLunar());
-        mYear = calendar.getYear();
+//        mTextMonthDay.setText(calendar.getMonth() + "月" + calendar.getDay() + "日");
+//        mTextYear.setText(String.valueOf(calendar.getYear()));
+//        mTextLunar.setText(calendar.getLunar());
+//        mYear = calendar.getYear();
     }
 
     @Override
@@ -229,6 +243,10 @@ public class calendarFragment extends BaseFragment implements
         for (Calendar calendar : weekCalendars) {
             Log.e("onWeekChange", calendar.toString());
         }
+        Calendar calendar = mCalendarView.getSelectedCalendar();
+        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
+        adapter.clear();
+        adapter.addAll(taskList);
     }
 
     @Override
@@ -260,5 +278,10 @@ public class calendarFragment extends BaseFragment implements
         Log.e("onYearChange", " 年份变化 " + year);
     }
 
+    public void updateDate(){
+        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
+        adapter.clear();
+        adapter.addAll(taskList);
+    }
 
 }

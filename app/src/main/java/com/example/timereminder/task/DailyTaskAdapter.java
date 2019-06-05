@@ -26,7 +26,7 @@ public class DailyTaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter
         TaskViewHolder h= (TaskViewHolder) holder;
         E task=mItems.get(position);
         if(null!=item.getName())
-            h.mName.setText(item.getName()+ " "+Long.toString(item.getId()));
+            h.mName.setText(item.getName());
         if(null!=item.getLocation())
             h.mLocation.setText(item.getLocation());
         //TODO:在这里调整显示时间的格式

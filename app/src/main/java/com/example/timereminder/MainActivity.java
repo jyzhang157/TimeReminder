@@ -1,5 +1,6 @@
 package com.example.timereminder;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -49,6 +50,16 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                navigation.getMenu().getItem(position).setChecked(true);
+                switch (position) {
+                    case 0:
+                        mNotificationFragment.updateDate();
+                        break;
+                    case 1:
+                        mCalendarFragment.updateDate();
+                        break;
+                    case 2:
+                        break;
+                }
                 Log.e("mViewPager","page"+position);
             }
             @Override
@@ -87,10 +98,30 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, AddActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
     }
 
     @Override
     protected void initData(){
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode , Intent data){
+        switch (requestCode){
+            case 1:
+                if(resultCode==RESULT_OK) {
+                    String returnedData = data.getStringExtra("item_return");
+                    Log.d("show time", returnedData);
+                }
+                break;
+            default:
+        }
     }
 }
