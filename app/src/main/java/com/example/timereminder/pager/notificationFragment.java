@@ -27,7 +27,8 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class notificationFragment extends BaseFragment {
+public class notificationFragment extends BaseFragment implements
+    MainActivity.OnUpdateNotificationFragment{
 
     TextView mTextMonthDay;
     TextView mTextYear;
@@ -64,6 +65,7 @@ public class notificationFragment extends BaseFragment {
 
         mRootView.findViewById(R.id.iv_func).setVisibility(View.INVISIBLE);
 
+        ((MainActivity)getActivity()).setOnUpdateNotificationFragment(this);
         //TODO:添加一些基本的事件类型，用于测试显示列表，后续注意删除
         taskList=new ArrayList<TaskMessage>();
         taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
@@ -87,8 +89,7 @@ public class notificationFragment extends BaseFragment {
                                     case 1:
                                         taskList.get(position).delete();
                                         taskList.remove(position);
-                                        adapter.clear();
-                                        adapter.addAll(taskList);
+                                        ((MainActivity)getActivity()).updateAllDateInView();
                                         break;
                                 }
                             }
@@ -108,9 +109,7 @@ public class notificationFragment extends BaseFragment {
 
     @Override
     protected  void initData(){
-        taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
-        adapter.clear();
-        adapter.addAll(taskList);
+        onUpdate();
     }
 //TODO:这里用于接受添加任务活动的返回值
 //    @Override
@@ -125,9 +124,10 @@ public class notificationFragment extends BaseFragment {
 //            default:
 //        }
 //    }
-public void updateDate(){
-    taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
-    adapter.clear();
-    adapter.addAll(taskList);
-}
+    @Override
+    public void onUpdate(){
+        taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
+        adapter.clear();
+        adapter.addAll(taskList);
+    }
 }

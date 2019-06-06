@@ -27,6 +27,8 @@ public class MainActivity extends BaseActivity {
     private settingFragment mSettingFragment;
     private List<Fragment> mFragmentList;
     private ViewPager mViewPager;
+    private OnUpdateNotificationFragment mUpdateNotification;
+    private OnUpdateCalendarFragment mUpdateCalendarFragment;
 
     @Override
     protected int getLayoutId() {
@@ -52,10 +54,8 @@ public class MainActivity extends BaseActivity {
                navigation.getMenu().getItem(position).setChecked(true);
                 switch (position) {
                     case 0:
-                        mNotificationFragment.updateDate();
                         break;
                     case 1:
-                        mCalendarFragment.updateDate();
                         break;
                         //TODO:setting
                     //case 2:
@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity {
                 startActivityForResult(intent,1);
             }
         });
+        updateAllDateInView();
     }
 
     @Override
@@ -120,10 +121,33 @@ public class MainActivity extends BaseActivity {
             case 1:
                 if(resultCode==RESULT_OK) {
                     String returnedData = data.getStringExtra("item_return");
+                    updateAllDateInView();
                     Log.d("show time", returnedData);
                 }
                 break;
             default:
         }
+    }
+
+    public void updateAllDateInView(){
+        if(mUpdateNotification!=null)
+            mUpdateNotification.onUpdate();
+        if(mUpdateCalendarFragment!=null)
+            mUpdateCalendarFragment.onUpdate();
+    }
+
+    public interface OnUpdateNotificationFragment{
+        void onUpdate();
+    }
+    public interface OnUpdateCalendarFragment{
+        void onUpdate();
+    }
+
+    public void setOnUpdateNotificationFragment(OnUpdateNotificationFragment in){
+        mUpdateNotification=in;
+    }
+
+    public void setOnUpdateCalendarFragment(OnUpdateCalendarFragment in){
+        mUpdateCalendarFragment=in;
     }
 }

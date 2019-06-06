@@ -2,6 +2,7 @@ package com.example.timereminder.pager;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timereminder.AddActivity;
+import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
@@ -39,7 +42,8 @@ public class calendarFragment extends BaseFragment implements
         CalendarView.OnWeekChangeListener,
         CalendarView.OnViewChangeListener,
         CalendarView.OnCalendarInterceptListener,
-        CalendarView.OnYearViewChangeListener{
+        CalendarView.OnYearViewChangeListener,
+        MainActivity.OnUpdateCalendarFragment{
 
     private TextView mTextMessage;
     TextView mTextMonthDay;
@@ -85,6 +89,8 @@ public class calendarFragment extends BaseFragment implements
                 mTextMonthDay.setText(String.valueOf(mYear));
             }
         });
+
+        ((MainActivity)getActivity()).setOnUpdateCalendarFragment(this);
         mRootView.findViewById(R.id.iv_more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +102,8 @@ public class calendarFragment extends BaseFragment implements
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which) {
                                         case 0:
+                                            Intent intent=new Intent(getActivity(), AddActivity.class);
+                                            startActivityForResult(intent,1);
                                             break;
                                         case 1:
                                             mCalendarView.scrollToNext(false);
@@ -158,8 +166,7 @@ public class calendarFragment extends BaseFragment implements
                                     case 1:
                                         taskList.get(position).delete();
                                         taskList.remove(position);
-                                        adapter.clear();
-                                        adapter.addAll(taskList);
+                                        ((MainActivity)getActivity()).updateAllDateInView();
                                         break;
                                 }
                             }
@@ -173,9 +180,10 @@ public class calendarFragment extends BaseFragment implements
 
     @Override
     protected  void initData(){
-        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
-        adapter.clear();
-        adapter.addAll(taskList);
+//        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
+//        adapter.clear();
+//        adapter.addAll(taskList);
+        onUpdate();
     }
 
     @Override
@@ -193,9 +201,7 @@ public class calendarFragment extends BaseFragment implements
         mTextYear.setText(String.valueOf(calendar.getYear()));
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
-        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
-        adapter.clear();
-        adapter.addAll(taskList);
+        onUpdate();
 //            Toast.makeText(getContext(), getCalendarText(calendar), Toast.LENGTH_SHORT).show();// }
 //        Log.e("lunar "," --  " + calendar.getLunarCalendar().toString() + "\n" +
 //        "  --  " + calendar.getLunarCalendar().getYear());
@@ -244,9 +250,10 @@ public class calendarFragment extends BaseFragment implements
             Log.e("onWeekChange", calendar.toString());
         }
         Calendar calendar = mCalendarView.getSelectedCalendar();
-        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
-        adapter.clear();
-        adapter.addAll(taskList);
+//        taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,calendar);
+//        adapter.clear();
+//        adapter.addAll(taskList);
+        onUpdate();
     }
 
     @Override
@@ -278,7 +285,8 @@ public class calendarFragment extends BaseFragment implements
         Log.e("onYearChange", " 年份变化 " + year);
     }
 
-    public void updateDate(){
+    @Override
+    public void onUpdate(){
         taskList= TaskDatabaseHelper.findOneDayDate(TaskMessage.class,mCalendarView.getSelectedCalendar());
         adapter.clear();
         adapter.addAll(taskList);
