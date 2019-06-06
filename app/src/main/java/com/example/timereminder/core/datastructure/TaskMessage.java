@@ -1,13 +1,17 @@
 package com.example.timereminder.core.datastructure;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.litepal.crud.LitePalSupport;
 import org.litepal.exceptions.DataSupportException;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TaskMessage extends LitePalSupport {
+public class TaskMessage extends LitePalSupport implements Serializable {
     private long id;
     private String m_name;
     private Date m_time;//格式为 "YYYY-MM-DD HH:MM:SS.SSS" 的日期
@@ -97,4 +101,5 @@ public class TaskMessage extends LitePalSupport {
     public boolean equals(TaskMessage obj) {
         return (this == obj);
     }
+
 }

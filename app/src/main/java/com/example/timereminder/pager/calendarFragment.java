@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timereminder.AddActivity;
+import com.example.timereminder.EditActivity;
 import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
@@ -162,6 +163,9 @@ public class calendarFragment extends BaseFragment implements
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
+                                        Intent intent=new Intent(getActivity(), EditActivity.class);
+                                        intent.putExtra("task_message",taskList.get(position));
+                                        startActivityForResult(intent,1);
                                         break;
                                     case 1:
                                         taskList.get(position).delete();

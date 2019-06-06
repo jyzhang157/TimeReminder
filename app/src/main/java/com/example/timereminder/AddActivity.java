@@ -138,6 +138,8 @@ public class AddActivity extends AppCompatActivity {
                     intent.putExtra("item_return",mTask.getTime().toString());
                     Log.d("show time of task",mTask.getTime().toString());
                 }
+                intent.putExtra("item_return","Hello MainActivity");
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });

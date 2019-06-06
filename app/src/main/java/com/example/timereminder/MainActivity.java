@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
-        switch (requestCode){
+        switch (requestCode%(0xffff+1)){
             case 1:
                 if(resultCode==RESULT_OK) {
                     String returnedData = data.getStringExtra("item_return");

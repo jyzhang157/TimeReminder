@@ -1,8 +1,9 @@
 package com.example.timereminder.core.datastructure;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ExpressMessage extends TaskMessage {
+public class ExpressMessage extends TaskMessage implements Serializable {
     private int m_code;//存储取件码
     private String m_expressCompany;//快递公司
 
