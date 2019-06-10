@@ -1,51 +1,546 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingBottom="1dp"
-    android:paddingTop="2dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
     <android.support.v7.widget.CardView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cv"
-        >
-
-        <RelativeLayout
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            >
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="35dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
                 android:id="@+id/dt_name"
-                android:textSize="20dp"/>
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:text="上海交通大学机械学院软件工程课程最终答辩时间"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/dt_btime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="16dp"
+                    android:paddingLeft="16dp"
+                    android:gravity="center"
+                    android:text="09:10" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dt_location"
+                    android:text = "上海市闵行区上海交通大学陈瑞球楼B305"
+                    android:drawableStart="@drawable/ic_location_20dp"
+                    android:drawableLeft="@drawable/ic_location_20dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="6月5号"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="3dp"
+                android:paddingRight="3dp"
+                android:id="@+id/dt_edate"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="10:03"
+                android:gravity="center_vertical"
+                android:id="@+id/dt_etime"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cb"
+                android:checked="false"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="起床"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="上海交通大学陈瑞球楼"
+                    android:drawableStart="@drawable/ic_location_20dp"
+                    android:drawableLeft="@drawable/ic_location_20dp"
+                    android:id="@+id/tv_time"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_sdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="10sp"
+                    android:text="2019年12月15日"/>
+
+
+                <TextView
+                    android:id="@+id/tv_stime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingBottom="2dp"
+                    android:gravity="right"
+                    android:textSize="10sp"
+                    android:text="13:18"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="2009年02月29日"
+                    android:textSize="10sp"
+                    android:id="@+id/tv_edate"/>
+                <TextView
+                    android:id="@+id/tv_etime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="10sp"
+                    android:gravity="right"
+                    android:text="13:18"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dt_sdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_time_18dp"
+                    android:singleLine="true"
+                    android:text="2019年12月15日"/>
+                <TextView
+                    android:id="@+id/dt_stime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="11:12"/>
+
+                <TextView
+                    android:id="@+id/dt_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
+                    android:singleLine="true"
+                    android:text="2019年12月15日"/>
+
+                <TextView
+                    android:id="@+id/dt_endtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="12:12" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="200dp"
-                android:layout_height="15dp"
-                android:id="@+id/dt_location"
-                android:layout_below="@id/dt_name"/>
+                android:id="@+id/dt_name1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="软件工程课程答辩"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:textSize="10sp"
-                android:layout_alignParentRight="true"
-                android:id="@+id/dt_btime"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:textSize="10sp"
-                android:layout_alignParentRight="true"
-                android:id="@+id/dt_etime"
-                android:layout_below="@id/dt_btime"/>
+                <TextView
+                    android:id="@+id/dt_location1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_location_20dp"
+                    android:drawableLeft="@drawable/ic_location_20dp"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="陈瑞球楼B305" />
+            </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+   -->
+
+
+   <!--带复选框及分割线-->
+    <!--
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/cb1"
+                android:checked="false"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dt_sdate1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_time_18dp"
+                        android:singleLine="true"
+                        android:text="2019年12月15日"/>
+                    <TextView
+                        android:id="@+id/dt_stime1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="11:12"/>
+
+                    <TextView
+                        android:id="@+id/dt_enddate1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:singleLine="true"
+                        android:text="2019年12月15日"/>
+
+                    <TextView
+                        android:id="@+id/dt_endtime1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:text="12:12" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/color_line"/>
+
+                <TextView
+                    android:id="@+id/dt_name11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="软件工程课程答辩"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dt_location11"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableStart="@drawable/ic_location_20dp"
+                        android:drawableLeft="@drawable/ic_location_20dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="陈瑞球楼B305" />
+                    <TextView
+                        android:id="@+id/dt_express"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_box_20dp"
+                        android:drawableLeft="@drawable/ic_box_20dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="UX9436" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    -->
+   <!--无复选框带分割线-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dt_start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_time_18dp"
+                        android:singleLine="true"
+                        android:text="2019年12月15日"/>
+                    <TextView
+                        android:id="@+id/dt_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="11:12"/>
+
+                    <TextView
+                        android:id="@+id/dt_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="12dp"
+                        android:singleLine="true"
+                        android:text="2019年12月15日"/>
+
+                    <TextView
+                        android:id="@+id/dt_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:text="12:12" />
+                </LinearLayout>
+                <!--
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/color_line"/>
+                    -->
+
+                <TextView
+                    android:id="@+id/dt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:ellipsize="marquee"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="软件工程课程答辩"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dt_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:drawableStart="@drawable/ic_location_20dp"
+                        android:drawableLeft="@drawable/ic_location_20dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="陈瑞球楼B305" />
+                    <TextView
+                        android:id="@+id/dt_express_code"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_box_20dp"
+                        android:drawableLeft="@drawable/ic_box_20dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="UX9436" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </android.support.v7.widget.CardView>
 

@@ -1,17 +1,24 @@
 package com.example.timereminder.pager;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -30,183 +37,157 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class settingFragment extends BaseFragment implements
-         DatePickerFragment.OnGetDate,
-         TimePickerFragment.OnGetTime
-         //View.OnClickListener
+import util.DensityUtil;
+
+public class settingFragment extends BaseFragment
         {
 
-    EditText mName;
-    EditText mDate;
-    EditText mTime;
-    EditText mLocation;
-    Button mAddButton;
-    RecyclerView taskRecyclerView;
-    LinearLayoutManager layoutManager;
-    TaskAdapter<TaskMessage> adapter;
-    List<TaskMessage> taskList;
-    Button mDButton;
-    @Override
-    protected int getLayoutId(){
-        return R.layout.fragment_pager_setting;
-    }
-
-    @Override
-    protected void initView(){
-        mName=(EditText) mRootView.findViewById(R.id.test_name);
-        mDate=(EditText)mRootView.findViewById(R.id.test_date);
-        mTime=(EditText)mRootView.findViewById(R.id.test_edate);
-        mLocation=(EditText)mRootView.findViewById(R.id.test_location);
-        mAddButton=(Button)mRootView.findViewById(R.id.test_add_button);
-        mDButton=(Button)mRootView.findViewById(R.id.test_d_button);
-        taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view);
-
-        layoutManager=new LinearLayoutManager(getContext());
-        taskRecyclerView.setLayoutManager(layoutManager);
-        adapter=new TaskAdapter<TaskMessage>(getContext());
-        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position, long itemId) {
-                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
-//                            .setTitle(R.string.list_dialog_title)
-                    .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0:
-                                    break;
-                                case 1:
-                                    break;
-                            }
-                        }
-                    })
-                    .create();
-        mMoreDialog.show();
+            protected int getLayoutId(){
+                return R.layout.setting;
             }
-        });
-        adapter.addAll(taskList);
-        taskRecyclerView.setAdapter(adapter);
 
-        mDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                showDatePickerDialog(v);
+            protected void initView(){
+                final TextView rmd = (TextView) mRootView.findViewById(R.id.remind_way);
+                LinearLayout set = (LinearLayout) mRootView.findViewById(R.id.layout_set);
+                set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showset(rmd);
+                    }
+                });
+
+                LinearLayout about = (LinearLayout) mRootView.findViewById(R.id.layout_about);
+                about.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showdialog();
+                    }
+                });
+
+                LinearLayout feed = (LinearLayout) mRootView.findViewById(R.id.layout_feedback);
+                feed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        feedbackdialog();
+                    }
+                });
             }
-        });
 
-        mTime.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                showTimePickerDialog(v);
-            }
-        });
-
-        mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name;
-                Date time;
-                Date etime;
-                String location;
-                name=mName.getText().toString();
-                time=convertStringToDate(mDate.getText().toString()+" "+mTime.getText().toString());
-                //etime=convertStringToDate(mTime.getText().toString());
-                location=mLocation.getText().toString();
-                TaskMessage task=new TaskMessage(name,time);
-                //task.setEndTime(etime);
-                task.setLocation(location);
-                TaskDatabaseHelper.addData(task);
-                updateRecycleView();
-
+            protected void initData(){
 
             }
-        });
 
-        mDButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TaskMessage task=new TaskMessage();
-                task=TaskDatabaseHelper.getFirstData(TaskMessage.class);
+            private void showdialog() {
+                final Dialog bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
+                View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_content_normal, null);
+                bottomDialog.setContentView(contentView);
+
+                TextView cancel = contentView.findViewById(R.id.cancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomDialog.dismiss();
+                    }
+                });
+
+                bottomDialog.setCancelable(true);
+                bottomDialog.setCanceledOnTouchOutside(false);
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+                params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(getContext(), 20f);
+                params.bottomMargin = DensityUtil.dp2px(getContext(), 10f);
+                contentView.setLayoutParams(params);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.show();
             }
-        });
-    }
 
-    @Override
-    protected  void initData(){
-//        adapter.clear();
-//        Date historyDate,futureDate;
-//        historyDate=new Date((1990-1900),(1-1),1);
-//        futureDate=new Date((2000-1900),(1-1),1);
-//        Log.e("筛选条件","开始时间"+historyDate.toString()+"结束时间"+futureDate.toString());
-//        taskList=TaskDatabaseHelper.findDataInTimeOrder(TaskMessage.class,historyDate,futureDate,true);
-//        adapter.addAll(taskList);
+            private void feedbackdialog() {
+                final Dialog bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
+                View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_content_normal, null);
+                bottomDialog.setContentView(contentView);
+                TextView title = contentView.findViewById(R.id.title);
+                title.setText("反馈与建议");
+                TextView content = contentView.findViewById(R.id.content);
+                content.setText("GitHub: github.com/jyzhang157/TimeReminder/\n邮箱：xxxxx@sjtu.edu.cn");
+                TextView cancel = contentView.findViewById(R.id.cancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomDialog.dismiss();
+                    }
+                });
 
-    }
-    //再添加数据后，根据数据库更新显示列表
+                bottomDialog.setCancelable(true);
+                bottomDialog.setCanceledOnTouchOutside(false);
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+                params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(getContext(), 20f);
+                params.bottomMargin = DensityUtil.dp2px(getContext(), 10f);
+                contentView.setLayoutParams(params);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.show();
+            }
 
-    private void updateRecycleView(){
-        Date historyDate,futureDate;
-        historyDate=new Date((1990-1900),(1-1),1);
-        futureDate=new Date((2100-1900),(1-1),1);
-        taskList=TaskDatabaseHelper.findDataInTimeOrder(TaskMessage.class,historyDate,futureDate,true);
-        Log.e("update data",Integer.toString(taskList.size()));
-        adapter.clear();
-        adapter.addAll(taskList);
-    }
+            private void showset (final TextView textview) {
+                final Dialog bottomDialog = new Dialog(getContext(), R.style.BottomDialog);
+                View contentView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_content_circle, null);
+                TextView ring = contentView.findViewById(R.id.ring);
+                TextView shock = contentView.findViewById(R.id.shock);
+
+                TextView cancel = contentView.findViewById(R.id.cancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomDialog.dismiss();
+                    }
+                });
+
+                TextView none = contentView.findViewById(R.id.no_remind);
+                none.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textview.setText("不提醒");
+                        bottomDialog.dismiss();
+                    }
+                });
 
 
-    //用于将String解析为Date类型
-    private Date convertStringToDate(String str){
-        Date date=new Date();
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        try {
-            date = sdf.parse(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
+                ring.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textview.setText("仅响铃");
+                        bottomDialog.dismiss();
+                    }
+                });
 
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        ((TimePickerFragment) newFragment).setOnGetTime(this);
-        newFragment.show(getChildFragmentManager(), "timePicker");
-        //return ((TimePickerFragment) newFragment).getTime();
-    }
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        ((DatePickerFragment) newFragment).setOnGetDate(this);
-        newFragment.show(getChildFragmentManager(), "datePicker");
-        //return ((DatePickerFragment) newFragment).getDate();
-    }
 
-    public void getDate(int year, int month, int day){
-        mDate.setText(Integer.toString(year)
-                +"-"+String.format("%02d",month)
-                +"-"+String.format("%02d",day));
-    }
+                shock.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textview.setText("仅振动");
+                        bottomDialog.dismiss();
+                    }
+                });
 
-    public void getTime(int hourOfDay, int minute){
-        mTime.setText(String.format("%02d",hourOfDay)
-                +":"+String.format("%02d",minute));
-    }
-
-//    public void onClick(View v){
-//        int itemPosition=taskRecyclerView.getChildLayoutPosition(v);
-//            AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
-////                            .setTitle(R.string.list_dialog_title)
-//                    .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            switch (which) {
-//                                case 0:
-//                                    break;
-//                                case 1:
-//                                    break;
-//                            }
-//                        }
-//                    })
-//                    .create();
-//        mMoreDialog.show();
-//    }
+                TextView both = contentView.findViewById(R.id.ring_shock);
+                both.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textview.setText("响铃并振动");
+                        bottomDialog.dismiss();
+                    }
+                });
+                bottomDialog.setContentView(contentView);
+                bottomDialog.setCancelable(true);
+                bottomDialog.setCanceledOnTouchOutside(false);
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+                params.width = getResources().getDisplayMetrics().widthPixels - DensityUtil.dp2px(getContext(), 20f);
+                params.bottomMargin = DensityUtil.dp2px(getContext(), 10f);
+                contentView.setLayoutParams(params);
+                bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+                bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+                bottomDialog.show();
+            }
 }

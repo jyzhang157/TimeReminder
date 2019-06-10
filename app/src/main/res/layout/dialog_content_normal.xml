@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关于"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="30dp"
+        android:singleLine="false"
+        android:text="     “简忆”旨在为用户提供简单便捷的日程管理服务，由上海交通大学软件工程课程“简忆”小组开发，功能正在继续完善中。\n\n当前版本：V1.0.0\n最新版本：V1.0.0"
+        android:textSize="16dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_true"/>
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="16dp"
+        android:text="确定"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="@color/color_enter"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"/>
+
+</LinearLayout>

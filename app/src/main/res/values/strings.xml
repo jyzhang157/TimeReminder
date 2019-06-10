@@ -35,5 +35,7 @@
         <item>删除</item>
     </string-array>
     <string name="title_activity_add_task">AddActivity</string>
+    <string name="title_activity_edit_task">EditActivity</string>
+    <string name="title_activity_show_task">ShowActivity</string>
     <string name="action_settings">Settings</string>
 </resources>

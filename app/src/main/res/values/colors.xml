@@ -8,4 +8,11 @@
     <color name="contentBackground">#FFFFFF</color>
 
     <color name="headToolBottom">#F0F0F0</color>
+
+    <color name="black">#000000</color>
+    <color name="color_false">#FFFFFF</color>
+    <color name="color_true">#E6E6E6</color>
+    <color name="color_enter">#238FE4</color>
+
+    <color name="color_line">#B6B3B3</color>
 </resources>

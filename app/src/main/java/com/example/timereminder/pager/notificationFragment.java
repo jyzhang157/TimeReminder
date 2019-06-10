@@ -14,6 +14,7 @@ import com.example.timereminder.AddTaskActivity;
 import com.example.timereminder.EditActivity;
 import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
+import com.example.timereminder.ShowActivity;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
 import com.example.timereminder.core.database.TaskDatabaseHelper;
@@ -79,27 +80,30 @@ public class notificationFragment extends BaseFragment implements
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final int position, long itemId) {
-                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
-//                            .setTitle(R.string.list_dialog_title)
-                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-                                        Intent intent=new Intent(getActivity(), EditActivity.class);
-                                        intent.putExtra("task_message",taskList.get(position));
-                                        startActivityForResult(intent,1);
-                                        break;
-                                    case 1:
-                                        taskList.get(position).delete();
-                                        taskList.remove(position);
-                                        ((MainActivity)getActivity()).updateAllDateInView();
-                                        break;
-                                }
-                            }
-                        })
-                        .create();
-                mMoreDialog.show();
+//                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+////                            .setTitle(R.string.list_dialog_title)
+//                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                switch (which) {
+//                                    case 0:
+//                                        Intent intent=new Intent(getActivity(), EditActivity.class);
+//                                        intent.putExtra("task_message",taskList.get(position));
+//                                        startActivityForResult(intent,1);
+//                                        break;
+//                                    case 1:
+//                                        taskList.get(position).delete();
+//                                        taskList.remove(position);
+//                                        ((MainActivity)getActivity()).updateAllDateInView();
+//                                        break;
+//                                }
+//                            }
+//                        })
+//                        .create();
+//                mMoreDialog.show();
+                Intent intent=new Intent(getActivity(), ShowActivity.class);
+                intent.putExtra("task_message",taskList.get(position));
+                startActivityForResult(intent,2);
             }
         });
 //        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {

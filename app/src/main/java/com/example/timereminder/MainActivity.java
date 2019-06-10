@@ -18,6 +18,7 @@ import com.example.timereminder.pager.notificationFragment;
 import com.example.timereminder.pager.settingFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
@@ -54,12 +55,15 @@ public class MainActivity extends BaseActivity {
                navigation.getMenu().getItem(position).setChecked(true);
                 switch (position) {
                     case 0:
+                        findViewById(R.id.fab).setVisibility(View.VISIBLE);
                         break;
                     case 1:
+                        findViewById(R.id.fab).setVisibility(View.VISIBLE);
                         break;
                         //TODO:setting
-                    //case 2:
-                        //break;
+                    case 2:
+                        findViewById(R.id.fab).setVisibility(View.GONE);
+                        break;
                 }
                 Log.e("mViewPager","page"+position);
             }
@@ -72,7 +76,7 @@ public class MainActivity extends BaseActivity {
         mFragmentList.add(mNotificationFragment = new notificationFragment());
         mFragmentList.add(mCalendarFragment = new calendarFragment());
         //TODO:setting
-        //.add(mSettingFragment = new settingFragment());
+        mFragmentList.add(mSettingFragment = new settingFragment());
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.reset(mFragmentList);
         mViewPager.setAdapter(adapter);
@@ -82,11 +86,11 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.e("mNavigation",""+item.getItemId());
                 switch (item.getItemId()) {
-//             TODO:setting
-//                    case R.id.navigation_setting:
-//                        mViewPager.setCurrentItem(2);
-//                        Log.e("mNavigation","click setting");
-//                        return true;
+             //TODO:setting
+                    case R.id.navigation_setting:
+                        mViewPager.setCurrentItem(2);
+                        Log.e("mNavigation","click setting");
+                        return true;
                     case R.id.navigation_calendar:
                         mViewPager.setCurrentItem(1);
                         Log.e("mNavigation","click calendar");
@@ -104,6 +108,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, AddActivity.class);
+                intent.putExtra("date",getSettingTime());
                 startActivityForResult(intent,1);
             }
         });
@@ -120,10 +125,13 @@ public class MainActivity extends BaseActivity {
         switch (requestCode%(0xffff+1)){
             case 1:
                 if(resultCode==RESULT_OK) {
-                    String returnedData = data.getStringExtra("item_return");
+                    //String returnedData = data.getStringExtra("item_return");
                     updateAllDateInView();
-                    Log.d("show time", returnedData);
+                    //Log.d("show time", returnedData);
                 }
+                break;
+            case 2:
+                    updateAllDateInView();
                 break;
             default:
         }
@@ -149,5 +157,16 @@ public class MainActivity extends BaseActivity {
 
     public void setOnUpdateCalendarFragment(OnUpdateCalendarFragment in){
         mUpdateCalendarFragment=in;
+    }
+
+    public Date getSettingTime(){
+        Date date=new Date();
+        switch(mViewPager.getCurrentItem()){
+            case 1:
+                date = mCalendarFragment.getDate();
+                break;
+                default:
+        }
+        return date;
     }
 }

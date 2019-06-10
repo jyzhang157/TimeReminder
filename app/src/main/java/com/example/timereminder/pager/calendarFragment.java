@@ -77,19 +77,19 @@ public class calendarFragment extends BaseFragment implements
         mCalendarView = (CalendarView) mRootView.findViewById(R.id.calendarView);
         //mCalendarView.setRange(2018, 7, 1, 2019, 4, 28);
         mTextCurrentDay = (TextView) mRootView.findViewById(R.id.tv_current_day);
-        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mCalendarLayout.isExpand()) {
-                    mCalendarLayout.expand();
-                    return;
-                }
-                //mCalendarView.showYearSelectLayout(mYear);
-                mTextLunar.setVisibility(View.GONE);
-                mTextYear.setVisibility(View.GONE);
-                mTextMonthDay.setText(String.valueOf(mYear));
-            }
-        });
+//        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!mCalendarLayout.isExpand()) {
+//                    mCalendarLayout.expand();
+//                    return;
+//                }
+//                //mCalendarView.showYearSelectLayout(mYear);
+//                mTextLunar.setVisibility(View.GONE);
+//                mTextYear.setVisibility(View.GONE);
+//                mTextMonthDay.setText(String.valueOf(mYear));
+//            }
+//        });
 
         ((MainActivity)getActivity()).setOnUpdateCalendarFragment(this);
         mRootView.findViewById(R.id.iv_more).setOnClickListener(new View.OnClickListener() {
@@ -296,4 +296,12 @@ public class calendarFragment extends BaseFragment implements
         adapter.addAll(taskList);
     }
 
+    public Date getDate(){
+        Calendar calendar = mCalendarView.getSelectedCalendar();
+        Date date=new Date();
+        date.setYear(calendar.getYear()-1900);
+        date.setMonth(calendar.getMonth()-1);
+        date.setDate(calendar.getDay());
+        return date;
+    }
 }

@@ -84,7 +84,8 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
             taskList= LitePal.order("m_time desc").find(modelClass);
         for(int i=0;i<taskList.size();i++){
             Date time=taskList.get(i).getTime();
-            if(time.before(historyDate)||time.after(futureDate)) {
+            Date etime=taskList.get(i).getEndTime();
+            if(etime.before(historyDate)||time.after(futureDate)) {
                 Log.e("当前时间",time.toString());
                 taskList.remove(i);
                 i--;

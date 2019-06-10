@@ -182,8 +182,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
-            #地点
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -212,7 +210,6 @@
                     android:background="@null"/>
             </LinearLayout>
 
-            #提醒设置
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -246,18 +243,42 @@
                     android:layout_weight="1"
                     android:entries="@array/spingarr"></Spinner>
             </LinearLayout>
-            #快递取货码
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="备注："
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:textColor="#000000"
+                    android:layout_marginLeft="20dp"/>
+                <EditText
+                    android:id="@+id/edittext_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:hint="请输入备注"
+                    android:textSize="16dp"
+                    android:background="@null"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:id="@+id/layout_express">
+                android:id="@+id/layout_express"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="1dp">
+                    android:orientation="horizontal">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -288,7 +309,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginLeft="20dp"
+                    android:divider="@drawable/line"
+                    android:showDividers="middle"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/express_layout">
                     <EditText
                         android:id="@+id/edittext_express_code"
                         android:layout_width="match_parent"
@@ -296,39 +322,33 @@
                         android:layout_weight="1"
                         android:hint="请输入取货码"
                         android:textSize="16dp"
-                        android:visibility="gone"
                         android:background="@null"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="短信内容"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:id="@+id/sms_content"
+                            android:hint="请输入取货码"
+                            android:textSize="16dp"
+                            android:gravity="start"
+                            android:background="@null"/>
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
 
-            #备注
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="备注："
-                    android:gravity="center"
-                    android:textSize="16dp"
-                    android:textColor="#000000"
-                    android:layout_marginLeft="20dp"/>
-                <EditText
-                    android:id="@+id/edittext_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:hint="请输入备注"
-                    android:textSize="16dp"
-                    android:background="@null"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    #编辑和删除
     <RelativeLayout
         android:id="@+id/layout_buttom"
         android:layout_width="match_parent"

@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -30,14 +31,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.core.datastructure.ExpressMessage;
 
 public class AddActivity extends AppCompatActivity {
-    int mYear,mMonth,mDay;
-    int mHour,mMinute;
+    Date mStartTime=new Date();
+    Date mEndTime=new Date();
     final int START_DATE_DIALOG = 1;
     final int START_TIME_DIALOG = 2;
     final int END_DATE_DIALOG = 3;
@@ -61,6 +63,7 @@ public class AddActivity extends AppCompatActivity {
         final EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         final EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
         final EditText expcode = (EditText) findViewById(R.id.edittext_express_code);/*取货码*/
+        final LinearLayout explayout = (LinearLayout) findViewById(R.id.express_layout);/*快递布局*/
         final EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         final TextView startdate = (TextView) findViewById(R.id.textview_start_date);/*开始日期*/
         final TextView enddate = (TextView) findViewById(R.id.textview_end_date);/*结束日期*/
@@ -68,8 +71,8 @@ public class AddActivity extends AppCompatActivity {
         final TextView endtime = (TextView) findViewById(R.id.textview_end_time);/*结束时间*/
         final Switch exp = (Switch) findViewById(R.id.switch_express);/*快递选择按钮*/
         Spinner remind = (Spinner) findViewById(R.id.spinner_reminder);//提醒
-        mTask=new TaskMessage();
-        mExpress=new ExpressMessage();
+
+
 
         ImageButton exit = (ImageButton) findViewById(R.id.button_exit);/*返回按钮触发*/
         exit.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +91,7 @@ public class AddActivity extends AppCompatActivity {
 //                intent.putExtra("item_return","Task add");
                 setResult(RESULT_OK,intent);
                 if(!exp.isChecked()){
+                    mTask=new TaskMessage();
                     Date date=convertStringToDate(
                             String.format(Locale.getDefault(),"%s %s",
                             startdate.getText().toString(),
@@ -114,6 +118,7 @@ public class AddActivity extends AppCompatActivity {
                     Log.d("show time of task",mTask.getTime().toString());
                 }
                 else{
+                    mExpress=new ExpressMessage();
                     Date date=convertStringToDate(
                             String.format(Locale.getDefault(),"%s %s",
                                     startdate.getText().toString(),
@@ -134,6 +139,8 @@ public class AddActivity extends AppCompatActivity {
                         mExpress.setLocation(location.getText().toString());
                     if(descrip.getText()!=null)
                         mExpress.setDescription(descrip.getText().toString());
+                    if(expcode.getText()!=null)
+                        mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
                     mExpress.save();
                     intent.putExtra("item_return",mTask.getTime().toString());
                     Log.d("show time of task",mTask.getTime().toString());
@@ -149,9 +156,9 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    expcode.setVisibility(View.VISIBLE);
+                    explayout.setVisibility(View.VISIBLE);
                 else
-                    expcode.setVisibility(View.GONE);
+                    explayout.setVisibility(View.GONE);
             }
         });
 
@@ -184,17 +191,19 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        final Calendar ca = Calendar.getInstance();
-        mYear = ca.get(Calendar.YEAR);
-        mMonth = ca.get(Calendar.MONTH)+1;
-        mDay = ca.get(Calendar.DAY_OF_MONTH);
-        mHour = ca.get(Calendar.HOUR_OF_DAY);
-        mMinute = ca.get(Calendar.MINUTE);
+        Intent intent= getIntent();
 
-        startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth,mDay));
-        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth,mDay));
-        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
-        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour+1,mMinute));
+        mStartTime=(Date)intent.getSerializableExtra("date");
+        mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
+
+        startDateDisplay();
+        startTimeDisplay();
+        endDateDisplay();
+        endTimeDisplay();
+//        startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth+1,mDay));
+//        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth+1,mDay));
+//        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
+//        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour+1,mMinute));
 
     }
 
@@ -235,67 +244,82 @@ public class AddActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case START_DATE_DIALOG:
-                return new DatePickerDialog(this, mStartDateListener, mYear, mMonth, mDay);
+                return new DatePickerDialog(this, mStartDateListener, mStartTime.getYear()+1900, mStartTime.getMonth(),mStartTime.getDate());
             case START_TIME_DIALOG:
-                return new TimePickerDialog(this, mStartTimeListener, mHour,mMinute,true);
+                return new TimePickerDialog(this, mStartTimeListener, mStartTime.getHours(),mStartTime.getMinutes(),true);
             case END_DATE_DIALOG:
-                return new DatePickerDialog(this, mEndDateListener, mYear, mMonth, mDay);
+                return new DatePickerDialog(this, mEndDateListener, mEndTime.getYear()+1900, mEndTime.getMonth(),mEndTime.getDate());
             case END_TIME_DIALOG:
-                return new TimePickerDialog(this, mEndTimeListener, mHour,mMinute,true);
+                return new TimePickerDialog(this, mEndTimeListener, mEndTime.getHours(),mEndTime.getMinutes(),true);
         }
         return null;
     }
 
     public void startDateDisplay() {
         TextView startdate = (TextView) findViewById(R.id.textview_start_date);
-        startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth,mDay));
+        startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mStartTime.getYear()+1900,mStartTime.getMonth()+1,mStartTime.getDate()));
+        Log.d("Start time",mStartTime.toString());
     }
     private DatePickerDialog.OnDateSetListener mStartDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
+            mStartTime.setYear(year-1900);
+            mStartTime.setMonth(monthOfYear);
+            mStartTime.setDate(dayOfMonth);
+
             startDateDisplay();
+            if(mEndTime.before(mStartTime))
+            {
+                mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
+                endDateDisplay();
+                endTimeDisplay();
+            }
         }
     };
 
     public void startTimeDisplay() {
         TextView starttime = (TextView) findViewById(R.id.textview_start_time);
-        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
+        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mStartTime.getHours(),mStartTime.getMinutes()));
     }
     private TimePickerDialog.OnTimeSetListener mStartTimeListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public  void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mHour = hourOfDay;
-            mMinute = minute;
+            mStartTime.setHours(hourOfDay);
+            mStartTime.setMinutes(minute);
             startTimeDisplay();
+            if(mEndTime.before(mStartTime))
+            {
+                mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
+                endDateDisplay();
+                endTimeDisplay();
+            }
         }
     };
 
     public void endDateDisplay() {
         TextView enddate = (TextView) findViewById(R.id.textview_end_date);
-        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth,mDay));
+        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mEndTime.getYear()+1900,mEndTime.getMonth()+1,mEndTime.getDate()));
+        Log.d("End time",mEndTime.toString());
     }
     private DatePickerDialog.OnDateSetListener mEndDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
+            mEndTime.setYear(year-1900);
+            mEndTime.setMonth(monthOfYear);
+            mEndTime.setDate(dayOfMonth);
             endDateDisplay();
         }
     };
 
     public void endTimeDisplay() {
         TextView endtime = (TextView) findViewById(R.id.textview_end_time);
-        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
+        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mEndTime.getHours(),mEndTime.getMinutes()));
     }
     private TimePickerDialog.OnTimeSetListener mEndTimeListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public  void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mHour = hourOfDay;
-            mMinute = minute;
+            mEndTime.setHours(hourOfDay);
+            mEndTime.setMinutes(minute);
             endTimeDisplay();
         }
     };
