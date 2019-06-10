@@ -223,6 +223,7 @@ public class ShowActivity extends AppCompatActivity {
         mExpress=(ExpressMessage)intent.getSerializableExtra("express_message");
         if(null!=mTask){
             exp.setChecked(false);
+            changeToTaskMode();
             if(mTask.getName()!=null)
                 issue.setText(mTask.getName());
             if(mTask.getTime()!=null){
@@ -236,6 +237,7 @@ public class ShowActivity extends AppCompatActivity {
         }
         else if(null!=mExpress) {
             exp.setChecked(true);
+            changeToExpressMode();
             if (null != mExpress) {
                 if (mExpress.getName() != null)
                     issue.setText(mExpress.getName());
@@ -272,7 +274,10 @@ public class ShowActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LitePal.delete(TaskMessage.class,mTask.getId());
+                if(exp.isChecked())
+                    LitePal.delete(ExpressMessage.class,mExpress.getId());
+                else
+                    LitePal.delete(TaskMessage.class,mTask.getId());
                 finish();
             }
         });
@@ -440,5 +445,16 @@ public class ShowActivity extends AppCompatActivity {
 //            endTimeDisplay();
 //        }
 //    };
+    private void changeToExpressMode(){
+    findViewById(R.id.layout_endtime).setVisibility(View.GONE);
+    findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
+    findViewById(R.id.sms).setVisibility(View.GONE);
+    ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+}
 
+    private void changeToTaskMode(){
+        findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
+        findViewById(R.id.express_layout).setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+    }
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.timereminder.AddActivity;
@@ -18,7 +19,9 @@ import com.example.timereminder.ShowActivity;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
 import com.example.timereminder.core.database.TaskDatabaseHelper;
+import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.core.datastructure.TaskMessage;
+import com.example.timereminder.task.ExpressAdapter;
 import com.example.timereminder.task.TaskAdapter;
 import com.haibin.calendarview.CalendarView;
 
@@ -41,7 +44,12 @@ public class notificationFragment extends BaseFragment implements
     LinearLayoutManager layoutManager;
     TaskAdapter<TaskMessage> adapter;
 
+    RecyclerView ExpressRecyclerView;
+    LinearLayoutManager expressLayoutManager;
+    ExpressAdapter<ExpressMessage> expressAdapter;
+
     List<TaskMessage> taskList;
+    List<ExpressMessage> expressList;
 
     public static notificationFragment newInstance() {
         return new notificationFragment();
@@ -80,39 +88,29 @@ public class notificationFragment extends BaseFragment implements
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final int position, long itemId) {
-//                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
-////                            .setTitle(R.string.list_dialog_title)
-//                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                switch (which) {
-//                                    case 0:
-//                                        Intent intent=new Intent(getActivity(), EditActivity.class);
-//                                        intent.putExtra("task_message",taskList.get(position));
-//                                        startActivityForResult(intent,1);
-//                                        break;
-//                                    case 1:
-//                                        taskList.get(position).delete();
-//                                        taskList.remove(position);
-//                                        ((MainActivity)getActivity()).updateAllDateInView();
-//                                        break;
-//                                }
-//                            }
-//                        })
-//                        .create();
-//                mMoreDialog.show();
                 Intent intent=new Intent(getActivity(), ShowActivity.class);
                 intent.putExtra("task_message",taskList.get(position));
                 startActivityForResult(intent,2);
             }
         });
-//        mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(getActivity(), AddActivity.class);
-//                startActivityForResult(intent,1);
-//            }
-//        });
+
+        expressList=new ArrayList<ExpressMessage>();
+        ExpressRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view_express);
+        expressLayoutManager=new LinearLayoutManager(getContext());
+        expressLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        ExpressRecyclerView.setLayoutManager(expressLayoutManager);
+        expressAdapter=new ExpressAdapter<ExpressMessage>(getContext());
+        expressAdapter.addAll(expressList);
+        ExpressRecyclerView.setAdapter(expressAdapter);
+
+        expressAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(final int position, long itemId) {
+                Intent intent=new Intent(getActivity(), ShowActivity.class);
+                intent.putExtra("express_message",expressList.get(position));
+                startActivityForResult(intent,2);
+            }
+        });
     }
 
     @Override
@@ -137,5 +135,9 @@ public class notificationFragment extends BaseFragment implements
         taskList= TaskDatabaseHelper.getAllDataInTimeOrder(TaskMessage.class,true);
         adapter.clear();
         adapter.addAll(taskList);
+
+        expressList=TaskDatabaseHelper.getAllDataInTimeOrder(ExpressMessage.class,true);
+        expressAdapter.clear();
+        expressAdapter.addAll(expressList);
     }
 }

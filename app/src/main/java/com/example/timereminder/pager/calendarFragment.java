@@ -18,9 +18,11 @@ import com.example.timereminder.AddActivity;
 import com.example.timereminder.EditActivity;
 import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
+import com.example.timereminder.ShowActivity;
 import com.example.timereminder.base.adapter.BaseRecyclerAdapter;
 import com.example.timereminder.base.fragment.BaseFragment;
 import com.example.timereminder.core.database.TaskDatabaseHelper;
+import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.task.DailyTaskAdapter;
 import com.example.timereminder.task.TaskAdapter;
@@ -62,6 +64,11 @@ public class calendarFragment extends BaseFragment implements
     LinearLayoutManager layoutManager;
     DailyTaskAdapter<TaskMessage> adapter;
     List<TaskMessage> taskList;
+
+    RecyclerView ExpressRecyclerView;
+    LinearLayoutManager expressLayoutManager;
+    TaskAdapter<ExpressMessage> expressAdapter;
+    List<ExpressMessage> expressList;
 
     @Override
     protected int getLayoutId(){
@@ -145,7 +152,7 @@ public class calendarFragment extends BaseFragment implements
         mTextLunar.setText("今日");
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
 
-
+//基本事件相关
         //设置列表
         taskList=new ArrayList<TaskMessage>();
         taskRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view_calendar);
@@ -180,6 +187,42 @@ public class calendarFragment extends BaseFragment implements
             }
         });
         taskRecyclerView.setAdapter(adapter);
+////快递相关
+//        expressList=new ArrayList<ExpressMessage>();
+//        ExpressRecyclerView=(RecyclerView) mRootView.findViewById(R.id.recycler_view_express);
+//        expressLayoutManager=new LinearLayoutManager(getContext());
+//        ExpressRecyclerView.setLayoutManager(expressLayoutManager);
+//        expressAdapter=new TaskAdapter<ExpressMessage>(getContext());
+//        expressAdapter.addAll(expressList);
+//        ExpressRecyclerView.setAdapter(expressAdapter);
+//
+//        expressAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(final int position, long itemId) {
+//                AlertDialog mMoreDialog = new AlertDialog.Builder(getContext())
+////                            .setTitle(R.string.list_dialog_title)
+//                        .setItems(R.array.list_on_task, new DialogInterface.OnClickListener(){
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                switch (which) {
+//                                    case 0:
+//                                        Intent intent=new Intent(getActivity(), EditActivity.class);
+//                                        intent.putExtra("express_message",expressList.get(position));
+//                                        startActivityForResult(intent,1);
+//                                        break;
+//                                    case 1:
+//                                        expressList.get(position).delete();
+//                                        expressList.remove(position);
+//                                        ((MainActivity)getActivity()).updateAllDateInView();
+//                                        break;
+//                                }
+//                            }
+//                        })
+//                        .create();
+//                mMoreDialog.show();
+//            }
+//        });
+//        ExpressRecyclerView.setAdapter(expressAdapter);
     }
 
     @Override

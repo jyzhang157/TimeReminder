@@ -107,7 +107,8 @@
                         android:gravity="center"
                         android:text=" 开始时间"
                         android:textColor="#000000"
-                        android:textSize="16dp" />
+                        android:textSize="16dp"
+                        android:id="@+id/time_name"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -144,7 +145,8 @@
                     android:layout_marginLeft="44dp"
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="13dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/layout_endtime">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -308,7 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginLeft="20dp"
                     android:divider="@drawable/line"
                     android:showDividers="middle"
@@ -328,16 +330,20 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:id="@+id/sms">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="短信内容"/>
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="短信内容" />
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:id="@+id/sms_content"
-                            android:hint="请输入取货码"
+                            android:layout_marginTop="5dp"
+                            android:hint="请粘贴短信"
                             android:textSize="16dp"
                             android:gravity="start"
                             android:background="@null"/>

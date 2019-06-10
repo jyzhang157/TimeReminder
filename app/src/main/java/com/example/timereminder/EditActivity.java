@@ -154,9 +154,9 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    explayout.setVisibility(View.VISIBLE);
+                    changeToExpressMode();
                 else
-                    explayout.setVisibility(View.GONE);
+                    changeToTaskMode();
             }
         });
 
@@ -350,5 +350,17 @@ public class EditActivity extends AppCompatActivity {
             endTimeDisplay();
         }
     };
+
+    private void changeToExpressMode(){
+        findViewById(R.id.layout_endtime).setVisibility(View.GONE);
+        findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
+        ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+    }
+
+    private void changeToTaskMode(){
+        findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
+        findViewById(R.id.express_layout).setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+    }
 
 }

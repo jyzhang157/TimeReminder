@@ -139,11 +139,11 @@ public class AddActivity extends AppCompatActivity {
                         mExpress.setLocation(location.getText().toString());
                     if(descrip.getText()!=null)
                         mExpress.setDescription(descrip.getText().toString());
-                    if(expcode.getText()!=null)
+                    if(expcode.getText()!=null&&expcode.getText().toString().length()!=0)
                         mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
                     mExpress.save();
-                    intent.putExtra("item_return",mTask.getTime().toString());
-                    Log.d("show time of task",mTask.getTime().toString());
+                    //intent.putExtra("item_return",mTask.getTime().toString());
+                    //Log.d("show time of task",mTask.getTime().toString());
                 }
                 intent.putExtra("item_return","Hello MainActivity");
                 setResult(RESULT_OK,intent);
@@ -156,9 +156,9 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    explayout.setVisibility(View.VISIBLE);
+                    changeToExpressMode();
                 else
-                    explayout.setVisibility(View.GONE);
+                    changeToTaskMode();
             }
         });
 
@@ -323,5 +323,17 @@ public class AddActivity extends AppCompatActivity {
             endTimeDisplay();
         }
     };
+
+    private void changeToExpressMode(){
+        findViewById(R.id.layout_endtime).setVisibility(View.GONE);
+        findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
+        ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+    }
+
+    private void changeToTaskMode(){
+        findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
+        findViewById(R.id.express_layout).setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+    }
 
 }
