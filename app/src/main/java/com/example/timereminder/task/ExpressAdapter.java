@@ -40,7 +40,10 @@ public class ExpressAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E
         if(null!=item.getName())
             h.mName.setText(item.getName());
         if(null!=item.getLocation()&&(item.getLocation().length()!=0))
+        {
+            h.mLocation.setVisibility(View.VISIBLE);
             h.mLocation.setText(item.getLocation());
+        }
         else
             h.mLocation.setVisibility(View.GONE);
         //TODO:在这里调整显示时间的格式

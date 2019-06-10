@@ -62,7 +62,7 @@ public class EditActivity extends AppCompatActivity {
 
         final EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         final EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
-        final EditText expcode = (EditText) findViewById(R.id.edittext_express_code);/*取货码*/
+        final EditText expcode = (EditText) findViewById(R.id.express_code);/*取货码*/
         final LinearLayout explayout = (LinearLayout) findViewById(R.id.express_layout);/*快递布局*/
         final EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         final TextView startdate = (TextView) findViewById(R.id.textview_start_date);/*开始日期*/
@@ -102,15 +102,15 @@ public class EditActivity extends AppCompatActivity {
                                     enddate.getText().toString(),
                                     endtime.getText().toString())
                     );
-                    if(issue.getText()!=null)
+                    if(issue.getText()!=null&&issue.getText().toString().length()!=0)
                         mTask.setName(issue.getText().toString());
                     if(date!=null)
                         mTask.setTime(date);
                     if(edate!=null)
                         mTask.setEndTime(edate);
-                    if(location.getText()!=null)
+                    if(location.getText()!=null&&location.getText().toString().length()!=0)
                         mTask.setLocation(location.getText().toString());
-                    if(descrip.getText()!=null)
+                    if(descrip.getText()!=null&&descrip.getText().toString().length()!=0)
                         mTask.setDescription(descrip.getText().toString());
                     mTask.update(mTask.getId());
                     //Toast.makeText(AddActivity.this,"提醒事件已保存",Toast.LENGTH_SHORT).show();
@@ -128,21 +128,21 @@ public class EditActivity extends AppCompatActivity {
                                     enddate.getText().toString(),
                                     endtime.getText().toString())
                     );
-                    if(issue.getText()!=null)
+                    if(issue.getText()!=null&&issue.getText().toString().length()!=0)
                         mExpress.setName(issue.getText().toString());
                     if(date!=null)
                         mExpress.setTime(date);
                     if(edate!=null)
                         mExpress.setEndTime(edate);
-                    if(location.getText()!=null)
+                    if(location.getText()!=null&&location.getText().toString().length()!=0)
                         mExpress.setLocation(location.getText().toString());
-                    if(descrip.getText()!=null)
+                    if(descrip.getText()!=null&&descrip.getText().toString().length()!=0)
                         mExpress.setDescription(descrip.getText().toString());
-                    if(expcode.getText()!=null)
+                    if(expcode.getText()!=null&&expcode.getText().toString().length()!=0)
                         mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
                     mExpress.update(mExpress.getId());
                     intent.putExtra("express_message_return",mExpress);
-                    Log.d("show time of task",mTask.getTime().toString());
+                    //Log.d("show time of task",mTask.getTime().toString());
                 }
                 setResult(RESULT_OK,intent);
                 finish();
@@ -193,6 +193,7 @@ public class EditActivity extends AppCompatActivity {
         mTask=(TaskMessage)intent.getSerializableExtra("task_message");
         mExpress=(ExpressMessage)intent.getSerializableExtra("express_message");
         if(null!=mTask){
+            changeToTaskMode();
             if(mTask.getName()!=null)
                 issue.setText(mTask.getName());
             if(mTask.getTime()!=null){
@@ -205,6 +206,7 @@ public class EditActivity extends AppCompatActivity {
                 location.setText(mTask.getLocation());
         }
         else if(null!=mExpress) {
+            changeToExpressMode();
             if (null != mExpress) {
                 if (mExpress.getName() != null)
                     issue.setText(mExpress.getName());
@@ -216,6 +218,8 @@ public class EditActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
+                if (mExpress.getCode() != 0)
+                    expcode.setText(Integer.toString(mExpress.getCode()));
             }
         }
         else {
@@ -354,13 +358,16 @@ public class EditActivity extends AppCompatActivity {
     private void changeToExpressMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.GONE);
         findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
+        findViewById(R.id.sms).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+        ((Switch) findViewById(R.id.switch_express)).setChecked(true);
     }
 
     private void changeToTaskMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
         findViewById(R.id.express_layout).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+        ((Switch) findViewById(R.id.switch_express)).setChecked(false);
     }
 
 }

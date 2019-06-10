@@ -65,7 +65,7 @@ public class ShowActivity extends AppCompatActivity {
 
         final EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         final EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
-        final EditText expcode = (EditText) findViewById(R.id.edittext_express_code);/*取货码*/
+        final EditText expcode = (EditText) findViewById(R.id.express_code);/*取货码*/
         final EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         final TextView startdate = (TextView) findViewById(R.id.textview_start_date);/*开始日期*/
         final TextView enddate = (TextView) findViewById(R.id.textview_end_date);/*结束日期*/
@@ -88,6 +88,8 @@ public class ShowActivity extends AppCompatActivity {
         remind.setFocusable(false);
         remind.setEnabled(false);
         exp.setEnabled(false);
+
+        findViewById(R.id.express_code).setFocusable(false);
 
         ((TextView)findViewById(R.id.textview_title)).setText("查看事件");
 
@@ -249,6 +251,8 @@ public class ShowActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
+                if (mExpress.getCode() != 0)
+                    expcode.setText(Integer.toString(mExpress.getCode()));
             }
         }
         startDateDisplay();
@@ -281,13 +285,13 @@ public class ShowActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
         EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
+        EditText code=(EditText)findViewById(R.id.express_code);
         switch (requestCode%(0xffff+1)){
             case 5:
                 if(resultCode==RESULT_OK) {
@@ -317,6 +321,8 @@ public class ShowActivity extends AppCompatActivity {
                             }
                             if (mExpress.getLocation() != null)
                                 location.setText(mExpress.getLocation());
+                            if (mExpress.getCode() != 0)
+                                code.setText(Integer.toString(mExpress.getCode()));
                         }
                     }
                     startDateDisplay();
@@ -450,11 +456,13 @@ public class ShowActivity extends AppCompatActivity {
     findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
     findViewById(R.id.sms).setVisibility(View.GONE);
     ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+    ((Switch) findViewById(R.id.switch_express)).setChecked(true);
 }
 
     private void changeToTaskMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
         findViewById(R.id.express_layout).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+        ((Switch) findViewById(R.id.switch_express)).setChecked(false);
     }
 }

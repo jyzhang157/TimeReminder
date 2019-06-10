@@ -209,7 +209,8 @@
                     android:layout_margin="1dp"
                     android:hint="请输入地点"
                     android:textSize="16dp"
-                    android:background="@null"/>
+                    android:background="@null"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <LinearLayout
@@ -315,16 +316,16 @@
                     android:divider="@drawable/line"
                     android:showDividers="middle"
                     android:orientation="vertical"
-                    android:visibility="gone"
                     android:id="@+id/express_layout">
                     <EditText
-                        android:id="@+id/edittext_express_code"
+                        android:id="@+id/express_code"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:hint="请输入取货码"
                         android:textSize="16dp"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:gravity="center"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

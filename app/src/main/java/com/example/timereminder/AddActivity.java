@@ -62,7 +62,7 @@ public class AddActivity extends AppCompatActivity {
 
         final EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         final EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
-        final EditText expcode = (EditText) findViewById(R.id.edittext_express_code);/*取货码*/
+        final EditText expcode = (EditText) findViewById(R.id.express_code);/*取货码*/
         final LinearLayout explayout = (LinearLayout) findViewById(R.id.express_layout);/*快递布局*/
         final EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         final TextView startdate = (TextView) findViewById(R.id.textview_start_date);/*开始日期*/
