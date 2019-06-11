@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeReminder</string>
+    <string name="app_name">简忆</string>
     <string name="title_setting">设置</string>
     <string name="title_calendar">日历</string>
     <string name="title_notifications">提醒</string>
