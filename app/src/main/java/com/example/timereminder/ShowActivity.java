@@ -285,10 +285,16 @@ public class ShowActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(exp.isChecked())
+                Intent intent = new Intent();
+                if(exp.isChecked()){
+                    intent.putExtra("express_message_return",mExpress);
                     LitePal.delete(ExpressMessage.class,mExpress.getId());
-                else
+                }
+                else{
+                    intent.putExtra("task_message_return",mTask);
                     LitePal.delete(TaskMessage.class,mTask.getId());
+                }
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });

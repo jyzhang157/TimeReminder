@@ -49,7 +49,9 @@ public class AlarmHelper {
         // 设定的时间是Reminder实体中封装的时间
         Notification notification=new NotificationCompat.Builder(context,context.getString(R.string.channel_id))
                 .setContentTitle(task.getName())
-                .setContentText(task.getDescription().toString())
+                .setContentText(task.getDescription()
+                        +"\n"
+                        +task.getLocation())
                 .setWhen(task.getTime().getTime())
                 .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                 .setContentIntent(pi)
@@ -72,7 +74,9 @@ public class AlarmHelper {
         // 设定的时间是Reminder实体中封装的时间
         Notification notification=new NotificationCompat.Builder(context,context.getString(R.string.channel_id))
                 .setContentTitle(express.getName())
-                .setContentText(express.getCode())
+                .setContentText(express.getCode()
+                        +"\n"
+                        +express.getLocation())
                 .setWhen(express.getTime().getTime())
                 .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                 .setContentIntent(pi)

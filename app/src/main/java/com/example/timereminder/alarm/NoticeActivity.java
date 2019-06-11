@@ -42,17 +42,21 @@ public class NoticeActivity extends BroadcastReceiver {
             int task_id=(int) intent.getLongExtra("task_message_id",0);
             Long task_time=(Long) intent.getLongExtra("task_message_time",0);
             String task_descrip=(String) intent.getStringExtra("task_message_descrip");
-            TaskMessage temp= new TaskMessage(task,new Date(task_time),task_descrip);
+            String task_location=(String) intent.getStringExtra("task_message_location");
+            TaskMessage temp= new TaskMessage(task,new Date(task_time),task_descrip,task_location);
             AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),temp,task_id);
         }
         else if(express!=null){
-            int express_time=(int) intent.getLongExtra("express_message_time",0);
+            int express_id=(int) intent.getLongExtra("express_message_id",0);
+            Long express_time=intent.getLongExtra("express_message_time",0);
             String express_code=(String) intent.getStringExtra("express_message_code");
+            String express_location=(String) intent.getStringExtra("express_message_location");
             ExpressMessage temp=new ExpressMessage();
             temp.setName(express);
             temp.setTime(new Date(express_time));
             temp.setCode(express_code);
-            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE), temp,(-express_time-1));
+            temp.setLocation(express_location);
+            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE), temp,(-express_id-1));
         }
     }
 }

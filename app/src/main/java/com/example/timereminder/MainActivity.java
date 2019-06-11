@@ -175,6 +175,9 @@ public class MainActivity extends BaseActivity {
              //修改信息
             case 2:
                     updateAllDateInView();
+                if(resultCode==RESULT_OK) {
+                    deleteAlart(data);
+                }
                 break;
             default:
         }
@@ -192,6 +195,7 @@ public class MainActivity extends BaseActivity {
             intent.putExtra("task_message_id",mTask.getId());
             intent.putExtra("task_message_name",mTask.getName());
             intent.putExtra("task_message_time",mTask.getTime().getTime());
+            intent.putExtra("task_message_location",mTask.getName());
             intent.putExtra("task_message_descrip",mTask.getDescription());
             sender=PendingIntent.getBroadcast(
                     getApplicationContext(),(int)mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -201,10 +205,33 @@ public class MainActivity extends BaseActivity {
             intent.putExtra("express_message_id",mExpress.getId());
             intent.putExtra("express_message_name",mExpress.getName());
             intent.putExtra("express_message_time",mExpress.getTime().getTime());
+            intent.putExtra("express_message_location",mExpress.getLocation());
             intent.putExtra("express_message_code",mExpress.getCode());
             sender=PendingIntent.getBroadcast(
                     getApplicationContext(),(int)(-mExpress.getId()-1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             mAlarmManager.set(AlarmManager.RTC_WAKEUP, mExpress.getTime().getTime(), sender);
+        }
+    }
+
+    private void deleteAlart(Intent data){
+        TaskMessage mTask;
+        ExpressMessage mExpress;
+        mTask=(TaskMessage)data.getParcelableExtra("task_message_return");
+        mExpress=(ExpressMessage)data.getParcelableExtra("express_message_return");
+        //TODO
+        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+        PendingIntent sender;
+        if(mTask!=null) {
+            intent.putExtra("task_message_id",mTask.getId());
+            sender=PendingIntent.getBroadcast(
+                    getApplicationContext(),(int)mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.cancel(sender);
+        }
+        else if(mExpress!=null){
+            intent.putExtra("express_message_id",mExpress.getId());
+            sender=PendingIntent.getBroadcast(
+                    getApplicationContext(),(int)(-mExpress.getId()-1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.cancel(sender);
         }
     }
 
