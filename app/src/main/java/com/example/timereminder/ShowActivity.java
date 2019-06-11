@@ -1,8 +1,10 @@
 package com.example.timereminder;
 
 import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -33,6 +35,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.example.timereminder.alarm.NoticeActivity;
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.core.datastructure.ExpressMessage;
 
@@ -221,8 +224,8 @@ public class ShowActivity extends AppCompatActivity {
 //        });
 
         Intent intent= getIntent();
-        mTask=(TaskMessage)intent.getSerializableExtra("task_message");
-        mExpress=(ExpressMessage)intent.getSerializableExtra("express_message");
+        mTask=(TaskMessage)intent.getParcelableExtra("task_message");
+        mExpress=(ExpressMessage)intent.getParcelableExtra("express_message");
         if(null!=mTask){
             exp.setChecked(false);
             changeToTaskMode();
@@ -300,8 +303,8 @@ public class ShowActivity extends AppCompatActivity {
         switch (requestCode%(0xffff+1)){
             case 5:
                 if(resultCode==RESULT_OK) {
-                    mTask=(TaskMessage)data.getSerializableExtra("task_message_return");
-                    mExpress=(ExpressMessage)data.getSerializableExtra("express_message_return");
+                    mTask=(TaskMessage)data.getParcelableExtra("task_message_return");
+                    mExpress=(ExpressMessage)data.getParcelableExtra("express_message_return");
                     if(null!=mTask){
                         if(mTask.getName()!=null)
                             issue.setText(mTask.getName());
@@ -315,6 +318,8 @@ public class ShowActivity extends AppCompatActivity {
                             location.setText(mTask.getLocation());
                         if(mTask.getDescription()!=null)
                             descrip.setText(mTask.getDescription());
+
+                        sentToAlart(data);
                     }
                     else if(null!=mExpress) {
                         if (null != mExpress) {
@@ -332,6 +337,8 @@ public class ShowActivity extends AppCompatActivity {
                                 descrip.setText(mExpress.getDescription());
                             if (mExpress.getCode() != null)
                                 code.setText(mExpress.getCode());
+
+                            sentToAlart(data);
                         }
                     }
                     startDateDisplay();
@@ -341,6 +348,36 @@ public class ShowActivity extends AppCompatActivity {
                 }
                 break;
             default:
+        }
+    }
+
+    private void sentToAlart(Intent data) {
+        TaskMessage mTask;
+        ExpressMessage mExpress;
+        AlarmManager mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        mTask = (TaskMessage) data.getParcelableExtra("task_message_return");
+        mExpress = (ExpressMessage) data.getParcelableExtra("express_message_return");
+        //TODO
+        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+        PendingIntent sender;
+        if (mTask != null) {
+            intent.putExtra("task_message_id", mTask.getId());
+            intent.putExtra("task_message_name", mTask.getName());
+            intent.putExtra("task_message_time", mTask.getTime().getTime());
+            intent.putExtra("task_message_descrip", mTask.getDescription());
+            sender = PendingIntent.getBroadcast(
+                    getApplicationContext(), (int) mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.cancel(sender);
+            mAlarmManager.set(AlarmManager.RTC_WAKEUP, mTask.getTime().getTime(), sender);
+        } else if (mExpress != null) {
+            intent.putExtra("express_message_id", mExpress.getId());
+            intent.putExtra("express_message_name", mExpress.getName());
+            intent.putExtra("express_message_time", mExpress.getTime().getTime());
+            intent.putExtra("express_message_code", mExpress.getCode());
+            sender = PendingIntent.getBroadcast(
+                    getApplicationContext(), (int) (-mExpress.getId() - 1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.cancel(sender);
+            mAlarmManager.set(AlarmManager.RTC_WAKEUP, mExpress.getTime().getTime(), sender);
         }
     }
 

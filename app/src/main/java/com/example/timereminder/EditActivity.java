@@ -190,8 +190,8 @@ public class EditActivity extends AppCompatActivity {
         });
 
         Intent intent= getIntent();
-        mTask=(TaskMessage)intent.getSerializableExtra("task_message");
-        mExpress=(ExpressMessage)intent.getSerializableExtra("express_message");
+        mTask=(TaskMessage)intent.getParcelableExtra("task_message");
+        mExpress=(ExpressMessage)intent.getParcelableExtra("express_message");
         if(null!=mTask){
             changeToTaskMode();
             if(mTask.getName()!=null)
@@ -227,7 +227,7 @@ public class EditActivity extends AppCompatActivity {
             }
         }
         else {
-            mStartTime=(Date)intent.getSerializableExtra("date");
+            mStartTime=(Date)intent.getParcelableExtra("date");
             mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
         }
 

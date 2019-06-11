@@ -14,6 +14,8 @@ import com.example.timereminder.R;
 import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.core.datastructure.TaskMessage;
 
+import java.util.Date;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class NoticeActivity extends BroadcastReceiver {
@@ -34,13 +36,23 @@ public class NoticeActivity extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         createNotificationChannel(context);
-        TaskMessage task=(TaskMessage) intent.getSerializableExtra("task_message");
-        ExpressMessage express=(ExpressMessage) intent.getSerializableExtra("express_message");
+        String task=(String) intent.getStringExtra("task_message_name");
+        String express=(String) intent.getStringExtra("express_message_name");
         if(task!=null){
-            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),task);
+            int task_id=(int) intent.getLongExtra("task_message_id",0);
+            Long task_time=(Long) intent.getLongExtra("task_message_time",0);
+            String task_descrip=(String) intent.getStringExtra("task_message_descrip");
+            TaskMessage temp= new TaskMessage(task,new Date(task_time),task_descrip);
+            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),temp,task_id);
         }
         else if(express!=null){
-            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),express);
+            int express_time=(int) intent.getLongExtra("express_message_time",0);
+            String express_code=(String) intent.getStringExtra("express_message_code");
+            ExpressMessage temp=new ExpressMessage();
+            temp.setName(express);
+            temp.setTime(new Date(express_time));
+            temp.setCode(express_code);
+            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE), temp,(-express_time-1));
         }
     }
 }

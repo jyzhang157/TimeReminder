@@ -22,6 +22,7 @@ import com.example.timereminder.alarm.AlarmHelper;
 import com.example.timereminder.alarm.NoticeActivity;
 import com.example.timereminder.base.activity.BaseActivity;
 import com.example.timereminder.base.fragment.FragmentAdapter;
+import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.pager.calendarFragment;
 import com.example.timereminder.pager.notificationFragment;
@@ -166,16 +167,7 @@ public class MainActivity extends BaseActivity {
                 if(resultCode==RESULT_OK) {
                     //String returnedData = data.getStringExtra("item_return");
                     updateAllDateInView();
-                    TaskMessage mTask;
-                    mTask=(TaskMessage)data.getSerializableExtra("task_message_return");
-                    //TODO
-                    Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
-                    intent.putExtra("task_message",mTask);
-                    PendingIntent sender=PendingIntent.getBroadcast(
-                            getApplicationContext(),0, intent, 0);
-                    if(mTask!=null) {
-                        mAlarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), sender);
-                    }
+                    sentToAlart(data);
                     //startActivity(intent);
                     //Log.d("show time", returnedData);
                 }
@@ -185,6 +177,34 @@ public class MainActivity extends BaseActivity {
                     updateAllDateInView();
                 break;
             default:
+        }
+    }
+
+    private void sentToAlart(Intent data){
+        TaskMessage mTask;
+        ExpressMessage mExpress;
+        mTask=(TaskMessage)data.getParcelableExtra("task_message_return");
+        mExpress=(ExpressMessage)data.getParcelableExtra("express_message_return");
+        //TODO
+        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+        PendingIntent sender;
+        if(mTask!=null) {
+            intent.putExtra("task_message_id",mTask.getId());
+            intent.putExtra("task_message_name",mTask.getName());
+            intent.putExtra("task_message_time",mTask.getTime().getTime());
+            intent.putExtra("task_message_descrip",mTask.getDescription());
+            sender=PendingIntent.getBroadcast(
+                    getApplicationContext(),(int)mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.set(AlarmManager.RTC_WAKEUP, mTask.getTime().getTime(), sender);
+        }
+        else if(mExpress!=null){
+            intent.putExtra("express_message_id",mExpress.getId());
+            intent.putExtra("express_message_name",mExpress.getName());
+            intent.putExtra("express_message_time",mExpress.getTime().getTime());
+            intent.putExtra("express_message_code",mExpress.getCode());
+            sender=PendingIntent.getBroadcast(
+                    getApplicationContext(),(int)(-mExpress.getId()-1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mAlarmManager.set(AlarmManager.RTC_WAKEUP, mExpress.getTime().getTime(), sender);
         }
     }
 

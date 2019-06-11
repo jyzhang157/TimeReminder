@@ -166,6 +166,7 @@ public class AddActivity extends AppCompatActivity {
                         mExpress.setDescription(descrip.getText().toString());
                     if(expcode.getText()!=null&&expcode.getText().toString().length()!=0)
                         mExpress.setCode(expcode.getText().toString());
+                    intent.putExtra("express_message_return",mExpress);
                     mExpress.save();
                     //intent.putExtra("item_return",mTask.getTime().toString());
                     //Log.d("show time of task",mTask.getTime().toString());
