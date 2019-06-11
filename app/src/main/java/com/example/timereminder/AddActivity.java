@@ -4,10 +4,16 @@ import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,9 +39,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.core.datastructure.ExpressMessage;
+import com.example.timereminder.sms.SMSMatch;
 
 public class AddActivity extends AppCompatActivity {
     Date mStartTime=new Date();
@@ -47,6 +56,12 @@ public class AddActivity extends AppCompatActivity {
 
     TaskMessage mTask;
     ExpressMessage mExpress;
+
+    //sms
+    private String Message;
+    private SMSMatch smsMatch;
+
+    private  MyReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +87,17 @@ public class AddActivity extends AppCompatActivity {
         final Switch exp = (Switch) findViewById(R.id.switch_express);/*快递选择按钮*/
         Spinner remind = (Spinner) findViewById(R.id.spinner_reminder);//提醒
 
+        changeToTaskMode();
 
+        //sms
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("ReadSMS");
+        registerReceiver(myReceiver,filter);
+
+        ((TextView)findViewById(R.id.sms_content)).addTextChangedListener(textWatcher);
+
+        //other layout
 
         ImageButton exit = (ImageButton) findViewById(R.id.button_exit);/*返回按钮触发*/
         exit.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +165,7 @@ public class AddActivity extends AppCompatActivity {
                     if(descrip.getText()!=null)
                         mExpress.setDescription(descrip.getText().toString());
                     if(expcode.getText()!=null&&expcode.getText().toString().length()!=0)
-                        mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
+                        mExpress.setCode(expcode.getText().toString());
                     mExpress.save();
                     //intent.putExtra("item_return",mTask.getTime().toString());
                     //Log.d("show time of task",mTask.getTime().toString());
@@ -205,6 +230,12 @@ public class AddActivity extends AppCompatActivity {
 //        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
 //        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour+1,mMinute));
 
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
     }
 
     private Date convertStringToDate(String str){
@@ -327,13 +358,80 @@ public class AddActivity extends AppCompatActivity {
     private void changeToExpressMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.GONE);
         findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
-        ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+        ((TextView)findViewById(R.id.time_name)).setText(" 取件时间");
+        ((Switch) findViewById(R.id.switch_express)).setChecked(true);
     }
 
     private void changeToTaskMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
         findViewById(R.id.express_layout).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+        ((TextView)findViewById(R.id.time_name)).setText(" 开始时间");
+        ((Switch) findViewById(R.id.switch_express)).setChecked(false);
     }
 
-}
+    //sms
+    private class MyReceiver extends BroadcastReceiver {     //动态广播形式接受短信广播数据
+
+        @Override
+        public void onReceive(Context context, Intent intent){
+            if(intent.getAction().equals("ReadSMS")){
+                System.out.println("收到广播");
+                String messageFromsmsReceiver = intent.getStringExtra("sms");
+                if(!TextUtils.isEmpty(messageFromsmsReceiver)){
+                    ((TextView)findViewById(R.id.sms_content)).setText(messageFromsmsReceiver);
+                }
+            }
+        }
+    }
+
+    TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            Message = ((TextView) findViewById(R.id.sms_content)).getText().toString();
+            smsMatch = new SMSMatch(Message);
+            String keyContent = smsMatch.getKeyContent();
+            //((EditText) findViewById(R.id.edittext_description)).setText(keyContent);
+            if(smsMatch.isDelivery()){
+                /**
+                 * 匹配【菜鸟驿站】
+                 * 利用正则表达式匹配，()内匹配为一个group。Java中正则表达式转义符匹配为\\
+                 * [^\\】*] 匹配除了“】”外所有字符，\\】匹配一次“】”，[您的]{0,2} 匹配“您”、“的”各0~2次
+                 * group(1)=([^快递]+) 匹配除了“快递”外的字符大于等于1次，[快递]{0,2} 匹配“快”、“递”各0~2次
+                 * group(2)=([^\\,\\，]+) 匹配除了“，”、“,”外所有字符大于等于1次
+                 * group(3)=(.*) 贪婪匹配除\n、\r外所有字符
+                 * group(4)=(.*)
+                 */
+                String regex =
+                        "[^\\：*]\\：([^快递]+)[快递]{0,2}.*[\\s\\S]*"
+                        + "[^\\：*]\\：([^前]+).*[\\s\\S]*"
+                        + "[^\\：*]\\：(.*)[\\s\\S]*"
+                        + "[^\\：*]\\：(.*)[\\s\\S]*";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(keyContent);
+                if (m.find()) {
+                    ((EditText) findViewById(R.id.edittext_title)).setText(m.group(1)+"快递");
+                    ((TextView) findViewById(R.id.textview_start_time)).setText(m.group(2));
+                    ((EditText) findViewById(R.id.edittext_location)).setText(m.group(3));
+                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4));
+                }
+
+            }
+        }
+    };
+
+
+    }

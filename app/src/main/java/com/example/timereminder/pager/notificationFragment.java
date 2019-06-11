@@ -74,6 +74,7 @@ public class notificationFragment extends BaseFragment implements
 
 
         mRootView.findViewById(R.id.iv_func).setVisibility(View.INVISIBLE);
+        mRootView.findViewById(R.id.iv_more).setVisibility(View.GONE);
 
         ((MainActivity)getActivity()).setOnUpdateNotificationFragment(this);
         //TODO:添加一些基本的事件类型，用于测试显示列表，后续注意删除

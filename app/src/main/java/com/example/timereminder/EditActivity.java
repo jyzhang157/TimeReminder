@@ -139,7 +139,7 @@ public class EditActivity extends AppCompatActivity {
                     if(descrip.getText()!=null&&descrip.getText().toString().length()!=0)
                         mExpress.setDescription(descrip.getText().toString());
                     if(expcode.getText()!=null&&expcode.getText().toString().length()!=0)
-                        mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
+                        mExpress.setCode(expcode.getText().toString());
                     mExpress.update(mExpress.getId());
                     intent.putExtra("express_message_return",mExpress);
                     //Log.d("show time of task",mTask.getTime().toString());
@@ -218,8 +218,8 @@ public class EditActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
-                if (mExpress.getCode() != 0)
-                    expcode.setText(Integer.toString(mExpress.getCode()));
+                if (mExpress.getCode()  != null)
+                    expcode.setText(mExpress.getCode());
             }
         }
         else {
@@ -359,14 +359,14 @@ public class EditActivity extends AppCompatActivity {
         findViewById(R.id.layout_endtime).setVisibility(View.GONE);
         findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.sms).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.time_name)).setText("取件时间");
+        ((TextView)findViewById(R.id.time_name)).setText(" 取件时间");
         ((Switch) findViewById(R.id.switch_express)).setChecked(true);
     }
 
     private void changeToTaskMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
         findViewById(R.id.express_layout).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.time_name)).setText("开始时间");
+        ((TextView)findViewById(R.id.time_name)).setText(" 开始时间");
         ((Switch) findViewById(R.id.switch_express)).setChecked(false);
     }
 

@@ -60,7 +60,7 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
         }
         if(item instanceof ExpressMessage) {
             h.mExpress.setVisibility(View.VISIBLE);
-            h.mExpress.setText(Integer.toString(((ExpressMessage) item).getCode()));
+            h.mExpress.setText(((ExpressMessage) item).getCode());
         }
         else
             h.mExpress.setVisibility(View.GONE);
@@ -80,6 +80,8 @@ public class TaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E> {
         public TaskViewHolder(View view){
             super(view);
             mCheckbox=(CheckBox) view.findViewById(R.id.cb);
+            //TODO
+            mCheckbox.setVisibility(View.GONE);
             mName=(TextView) view.findViewById(R.id.dt_name);
             mSDate=(TextView) view.findViewById(R.id.dt_sdate);
             mSTime=(TextView) view.findViewById(R.id.dt_stime);

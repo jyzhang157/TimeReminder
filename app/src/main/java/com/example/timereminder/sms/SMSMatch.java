@@ -36,6 +36,10 @@ public class SMSMatch {
     private static final String TYPE7 = "顺丰快递";
     private static final String TYPE8 = "丰巢";
 
+    public boolean isDelivery(){
+        return (type>0);
+    }
+
     public SMSMatch(String SMSText) {
         this.SMSText = SMSText; //短信内容
         hasJudgeSMS = false;    //是否判断过短信类型

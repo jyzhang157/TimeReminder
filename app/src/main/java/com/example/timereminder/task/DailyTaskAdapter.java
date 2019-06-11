@@ -53,7 +53,7 @@ public class DailyTaskAdapter<E extends TaskMessage> extends BaseRecyclerAdapter
         }
         if(item instanceof ExpressMessage) {
             h.mExpress.setVisibility(View.VISIBLE);
-            h.mExpress.setText(Integer.toString(((ExpressMessage) item).getCode()));
+            h.mExpress.setText(((ExpressMessage) item).getCode());
         }
         else
             h.mExpress.setVisibility(View.GONE);

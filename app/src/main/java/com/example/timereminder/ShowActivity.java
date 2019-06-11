@@ -251,8 +251,8 @@ public class ShowActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
-                if (mExpress.getCode() != 0)
-                    expcode.setText(Integer.toString(mExpress.getCode()));
+                if (mExpress.getCode() != null)
+                    expcode.setText(mExpress.getCode());
             }
         }
         startDateDisplay();
@@ -321,8 +321,8 @@ public class ShowActivity extends AppCompatActivity {
                             }
                             if (mExpress.getLocation() != null)
                                 location.setText(mExpress.getLocation());
-                            if (mExpress.getCode() != 0)
-                                code.setText(Integer.toString(mExpress.getCode()));
+                            if (mExpress.getCode() != null)
+                                code.setText(mExpress.getCode());
                         }
                     }
                     startDateDisplay();

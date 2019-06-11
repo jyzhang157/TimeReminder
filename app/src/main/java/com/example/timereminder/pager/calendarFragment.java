@@ -84,6 +84,8 @@ public class calendarFragment extends BaseFragment implements
         mCalendarView = (CalendarView) mRootView.findViewById(R.id.calendarView);
         //mCalendarView.setRange(2018, 7, 1, 2019, 4, 28);
         mTextCurrentDay = (TextView) mRootView.findViewById(R.id.tv_current_day);
+
+        mRootView.findViewById(R.id.iv_more).setVisibility(View.GONE);
 //        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

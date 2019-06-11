@@ -57,7 +57,7 @@ public class ExpressAdapter<E extends TaskMessage> extends BaseRecyclerAdapter<E
         }
         if(item instanceof ExpressMessage) {
             h.mExpress.setVisibility(View.VISIBLE);
-            h.mExpress.setText(Integer.toString(((ExpressMessage) item).getCode()));
+            h.mExpress.setText(((ExpressMessage) item).getCode());
         }
         else
             h.mExpress.setVisibility(View.GONE);
