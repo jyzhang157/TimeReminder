@@ -204,6 +204,8 @@ public class EditActivity extends AppCompatActivity {
             }
             if(mTask.getLocation()!=null)
                 location.setText(mTask.getLocation());
+            if(mTask.getDescription()!=null)
+                descrip.setText(mTask.getDescription());
         }
         else if(null!=mExpress) {
             changeToExpressMode();
@@ -218,6 +220,8 @@ public class EditActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
+                if(mExpress.getDescription()!=null)
+                    descrip.setText(mExpress.getDescription());
                 if (mExpress.getCode()  != null)
                     expcode.setText(mExpress.getCode());
             }

@@ -236,6 +236,8 @@ public class ShowActivity extends AppCompatActivity {
             }
             if(mTask.getLocation()!=null)
                 location.setText(mTask.getLocation());
+            if(mTask.getDescription()!=null)
+                descrip.setText(mTask.getDescription());
         }
         else if(null!=mExpress) {
             exp.setChecked(true);
@@ -251,6 +253,8 @@ public class ShowActivity extends AppCompatActivity {
                 }
                 if (mExpress.getLocation() != null)
                     location.setText(mExpress.getLocation());
+                if(mExpress.getDescription()!=null)
+                    descrip.setText(mExpress.getDescription());
                 if (mExpress.getCode() != null)
                     expcode.setText(mExpress.getCode());
             }
@@ -292,6 +296,7 @@ public class ShowActivity extends AppCompatActivity {
         EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
         EditText location = (EditText) findViewById(R.id.edittext_location);/*地点*/
         EditText code=(EditText)findViewById(R.id.express_code);
+        EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         switch (requestCode%(0xffff+1)){
             case 5:
                 if(resultCode==RESULT_OK) {
@@ -308,6 +313,8 @@ public class ShowActivity extends AppCompatActivity {
                         }
                         if(mTask.getLocation()!=null)
                             location.setText(mTask.getLocation());
+                        if(mTask.getDescription()!=null)
+                            descrip.setText(mTask.getDescription());
                     }
                     else if(null!=mExpress) {
                         if (null != mExpress) {
@@ -321,6 +328,8 @@ public class ShowActivity extends AppCompatActivity {
                             }
                             if (mExpress.getLocation() != null)
                                 location.setText(mExpress.getLocation());
+                            if(mExpress.getDescription()!=null)
+                                descrip.setText(mExpress.getDescription());
                             if (mExpress.getCode() != null)
                                 code.setText(mExpress.getCode());
                         }
