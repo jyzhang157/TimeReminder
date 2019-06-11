@@ -137,9 +137,9 @@ public class AddActivity extends AppCompatActivity {
                         mTask.setLocation(location.getText().toString());
                     if(descrip.getText()!=null)
                         mTask.setDescription(descrip.getText().toString());
+                    intent.putExtra("task_message_return",mTask);
                     mTask.save();
                     //Toast.makeText(AddActivity.this,"提醒事件已保存",Toast.LENGTH_SHORT).show();
-                    intent.putExtra("item_return",mTask.getTime().toString());
                     Log.d("show time of task",mTask.getTime().toString());
                 }
                 else{
@@ -170,7 +170,6 @@ public class AddActivity extends AppCompatActivity {
                     //intent.putExtra("item_return",mTask.getTime().toString());
                     //Log.d("show time of task",mTask.getTime().toString());
                 }
-                intent.putExtra("item_return","Hello MainActivity");
                 setResult(RESULT_OK,intent);
                 finish();
             }

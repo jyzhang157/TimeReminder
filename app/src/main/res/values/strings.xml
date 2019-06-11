@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TimeReminder</string>
-    <string name="title_setting">Setting</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_setting">设置</string>
+    <string name="title_calendar">日历</string>
+    <string name="title_notifications">提醒</string>
 
     <string-array name="english_week_string_array">
         <item>Sun</item>
@@ -34,6 +34,11 @@
         <item>编辑</item>
         <item>删除</item>
     </string-array>
+
+    <string name="channel_id">notification</string>
+    <string name="channel_name">notification channel</string>
+    <string name="channel_description">use for notification</string>
+
     <string name="title_activity_add_task">AddActivity</string>
     <string name="title_activity_edit_task">EditActivity</string>
     <string name="title_activity_show_task">ShowActivity</string>

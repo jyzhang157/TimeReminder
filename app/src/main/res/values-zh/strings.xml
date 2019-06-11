@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TimeReminder</string>
-    <string name="title_setting">Setting</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_setting">设置</string>
+    <string name="title_calendar">日历</string>
+    <string name="title_notifications">提醒</string>
 
     <string-array name="english_week_string_array">
         <item>日</item>

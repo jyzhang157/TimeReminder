@@ -1,18 +1,28 @@
 package com.example.timereminder;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.timereminder.alarm.AlarmHelper;
+import com.example.timereminder.alarm.NoticeActivity;
 import com.example.timereminder.base.activity.BaseActivity;
 import com.example.timereminder.base.fragment.FragmentAdapter;
+import com.example.timereminder.core.datastructure.TaskMessage;
 import com.example.timereminder.pager.calendarFragment;
 import com.example.timereminder.pager.notificationFragment;
 import com.example.timereminder.pager.settingFragment;
@@ -20,6 +30,7 @@ import com.example.timereminder.pager.settingFragment;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -30,6 +41,14 @@ public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     private OnUpdateNotificationFragment mUpdateNotification;
     private OnUpdateCalendarFragment mUpdateCalendarFragment;
+    //private NotificationManager mNotificationManager;
+    private AlarmManager mAlarmManager;
+
+    private final String CHANNEL_ID="notification";
+//    NotificationChannel mChannel;
+//    private AlarmManager mAlarmManager;
+
+
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +57,9 @@ public class MainActivity extends BaseActivity {
 
     protected void initView() {
         setContentView(R.layout.activity_main);
+
+        //mNotificationManager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        mAlarmManager=(AlarmManager)getSystemService(ALARM_SERVICE);
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
         ActionBar actionbar = getSupportActionBar();
@@ -110,6 +132,22 @@ public class MainActivity extends BaseActivity {
                 Intent intent=new Intent(MainActivity.this, AddActivity.class);
                 intent.putExtra("date",getSettingTime());
                 startActivityForResult(intent,1);
+//                // 注册AlarmManager的定时服务
+//                Intent intent=new Intent();// Constants.ACITON_REMIND是自定义的一个action
+//
+//                // 使用Reminder实体的ID作为PendingIntent的requestCode可以保证PendingIntent的唯一性
+//                PendingIntent pi=PendingIntent.getBroadcast(MainActivity.this, 0, intent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT);
+//                // 设定的时间是Reminder实体中封装的时间
+//                Notification notification=new NotificationCompat.Builder(MainActivity.this,CHANNEL_ID)
+//                        .setContentTitle("ceshi")
+//                        .setContentText("ceshineirong")
+//                        .setWhen(System.currentTimeMillis()+1000)
+//                        .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+//                        .setContentIntent(pi)
+//                        .setAutoCancel(true)
+//                        .build();
+//                mNotificationManager.notify(0,notification);
             }
         });
         updateAllDateInView();
@@ -123,13 +161,26 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
         switch (requestCode%(0xffff+1)){
+            //添加数据
             case 1:
                 if(resultCode==RESULT_OK) {
                     //String returnedData = data.getStringExtra("item_return");
                     updateAllDateInView();
+                    TaskMessage mTask;
+                    mTask=(TaskMessage)data.getSerializableExtra("task_message_return");
+                    //TODO
+                    Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                    intent.putExtra("task_message",mTask);
+                    PendingIntent sender=PendingIntent.getBroadcast(
+                            getApplicationContext(),0, intent, 0);
+                    if(mTask!=null) {
+                        mAlarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), sender);
+                    }
+                    //startActivity(intent);
                     //Log.d("show time", returnedData);
                 }
                 break;
+             //修改信息
             case 2:
                     updateAllDateInView();
                 break;
