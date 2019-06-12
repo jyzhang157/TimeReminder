@@ -47,8 +47,8 @@ import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.sms.SMSMatch;
 
 public class AddActivity extends AppCompatActivity {
-    Date mStartTime=new Date();
-    Date mEndTime=new Date();
+    Date mStartTime;
+    Date mEndTime;
     final int START_DATE_DIALOG = 1;
     final int START_TIME_DIALOG = 2;
     final int END_DATE_DIALOG = 3;
@@ -71,7 +71,8 @@ public class AddActivity extends AppCompatActivity {
         if (actionbar != null){
             actionbar.hide();
         }
-
+        mStartTime=new Date();
+        mEndTime=new Date();
         RelativeLayout buttom = findViewById(R.id.layout_buttom);
         buttom.setVisibility(View.GONE);
 
@@ -217,14 +218,19 @@ public class AddActivity extends AppCompatActivity {
         });
 
         Intent intent= getIntent();
-
-        mStartTime=(Date)intent.getSerializableExtra("date");
+        if(null!=(Date)intent.getSerializableExtra("date"))
+            mStartTime=(Date)intent.getSerializableExtra("date");
         mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
-
         startDateDisplay();
         startTimeDisplay();
         endDateDisplay();
         endTimeDisplay();
+
+        String sms=(String)intent.getStringExtra("express_income");
+        if(sms!=null){
+            ((Switch) findViewById(R.id.switch_express)).setChecked(true);
+            ((TextView)findViewById(R.id.sms_content)).setText(sms);
+        }
 //        startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth+1,mDay));
 //        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth+1,mDay));
 //        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
@@ -378,6 +384,7 @@ public class AddActivity extends AppCompatActivity {
                 System.out.println("收到广播");
                 String messageFromsmsReceiver = intent.getStringExtra("sms");
                 if(!TextUtils.isEmpty(messageFromsmsReceiver)){
+                    ((Switch) findViewById(R.id.switch_express)).setChecked(true);
                     ((TextView)findViewById(R.id.sms_content)).setText(messageFromsmsReceiver);
                 }
             }

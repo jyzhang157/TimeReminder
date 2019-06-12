@@ -160,6 +160,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart(){
+        super.onStart();
+        updateAllDateInView();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
         switch (requestCode%(0xffff+1)){
             //添加数据
@@ -198,7 +204,7 @@ public class MainActivity extends BaseActivity {
             intent.putExtra("task_message_location",mTask.getName());
             intent.putExtra("task_message_descrip",mTask.getDescription());
             sender=PendingIntent.getBroadcast(
-                    getApplicationContext(),(int)mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    getApplicationContext(),(int)(mTask.getId()+1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             mAlarmManager.set(AlarmManager.RTC_WAKEUP, mTask.getTime().getTime(), sender);
         }
         else if(mExpress!=null){
@@ -224,7 +230,7 @@ public class MainActivity extends BaseActivity {
         if(mTask!=null) {
             intent.putExtra("task_message_id",mTask.getId());
             sender=PendingIntent.getBroadcast(
-                    getApplicationContext(),(int)mTask.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    getApplicationContext(),(int)(mTask.getId()+1), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             mAlarmManager.cancel(sender);
         }
         else if(mExpress!=null){

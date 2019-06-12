@@ -10,6 +10,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
+import com.example.timereminder.AddActivity;
+import com.example.timereminder.MainActivity;
 import com.example.timereminder.R;
 import com.example.timereminder.core.datastructure.ExpressMessage;
 import com.example.timereminder.core.datastructure.TaskMessage;
@@ -84,6 +86,29 @@ public class AlarmHelper {
                 .setPriority(NotificationManager.IMPORTANCE_HIGH)
                 .build();
         nManager.notify(id,notification);
+    }
+//启动快递接受事件
+    public static void setAlarm(Context context, NotificationManager nManager,String sms)
+    {
+
+        // 注册AlarmManager的定时服务
+        Intent intent=new Intent(context, AddActivity.class);// Constants.ACITON_REMIND是自定义的一个action
+
+        intent.putExtra("express_income",sms);
+
+        // 使用Reminder实体的ID作为PendingIntent的requestCode可以保证PendingIntent的唯一性
+        PendingIntent pi=PendingIntent.getActivity(context, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        // 设定的时间是Reminder实体中封装的时间
+        Notification notification=new NotificationCompat.Builder(context,context.getString(R.string.channel_id))
+                .setContentTitle("快递短信")
+                .setContentText("点击以添加事件")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                .build();
+        nManager.notify(0,notification);
     }
     /**
      * 取消提醒

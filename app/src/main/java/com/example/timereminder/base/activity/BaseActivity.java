@@ -40,6 +40,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+    }
+
     /**
      * 设置小米黑色状态栏字体
      */

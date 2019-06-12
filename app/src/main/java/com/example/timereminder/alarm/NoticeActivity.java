@@ -44,7 +44,7 @@ public class NoticeActivity extends BroadcastReceiver {
             String task_descrip=(String) intent.getStringExtra("task_message_descrip");
             String task_location=(String) intent.getStringExtra("task_message_location");
             TaskMessage temp= new TaskMessage(task,new Date(task_time),task_descrip,task_location);
-            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),temp,task_id);
+            AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),temp,task_id+1);
         }
         else if(express!=null){
             int express_id=(int) intent.getLongExtra("express_message_id",0);
