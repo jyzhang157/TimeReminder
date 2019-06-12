@@ -426,7 +426,7 @@ public class AddActivity extends AppCompatActivity {
                     ((EditText) findViewById(R.id.edittext_title)).setText(m.group(1)+"快递");
                     ((TextView) findViewById(R.id.textview_start_time)).setText(m.group(2));
                     ((EditText) findViewById(R.id.edittext_location)).setText(m.group(3));
-                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4));
+                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4).replaceAll("[^!-~]",""));
                 }
 
             }

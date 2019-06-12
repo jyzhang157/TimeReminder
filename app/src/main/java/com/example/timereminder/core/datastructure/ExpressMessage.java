@@ -56,7 +56,7 @@ public class ExpressMessage extends TaskMessage implements Parcelable {
     }
 
     public void setCode(String m_code) {
-        this.m_code = m_code;
+        this.m_code = m_code.replaceAll("[^!-~]","");
     }
 
     public String getCode() {
