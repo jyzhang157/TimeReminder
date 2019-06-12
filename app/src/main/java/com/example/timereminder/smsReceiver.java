@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 import com.example.timereminder.alarm.AlarmHelper;
+import com.example.timereminder.sms.SMSMatch;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,7 +43,11 @@ public class smsReceiver extends BroadcastReceiver {
 //                mIntent.putExtra("sms",receiveText);
 //                context.sendBroadcast(mIntent);
 
-                AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),receiveText);
+                SMSMatch smsMatch = new SMSMatch(receiveText);
+                String keyContent = smsMatch.getKeyContent();
+                //((EditText) findViewById(R.id.edittext_description)).setText(keyContent);
+                if(smsMatch.isDelivery())
+                    AlarmHelper.setAlarm(context,(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE),receiveText);
             }
         }
 
