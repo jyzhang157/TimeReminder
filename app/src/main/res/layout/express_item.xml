@@ -9,15 +9,15 @@
         android:id="@+id/cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="2dp"
         android:clickable="false"
         android:focusable="false"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:layout_marginBottom="5dp"
-                    android:text="起床"
+                    android:text="顺丰快递"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"/>
 
@@ -52,39 +52,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="6dp"
                     android:text="2019年12月15日"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="@color/color_line"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:text="上海交通大学陈瑞球楼"
+                    android:layout_marginLeft="5dp"
+                    android:text="学服中心"
+                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_location_20dp"
                     android:drawableLeft="@drawable/ic_location_20dp"
                     android:id="@+id/tv_location"
-                    android:layout_gravity="right|center_vertical"/>
+                    android:visibility="visible"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="left|center_vertical"/>
 
                 <TextView
                     android:id="@+id/tv_express_code"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_box_20dp"
                     android:drawableLeft="@drawable/ic_box_20dp"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:textSize="18sp"
                     android:text="UX9436"
                     android:layout_gravity="right|center_vertical"/>
 

@@ -411,8 +411,9 @@ public class AddActivity extends AppCompatActivity {
             Message = ((TextView) findViewById(R.id.sms_content)).getText().toString();
             smsMatch = new SMSMatch(Message);
             String keyContent = smsMatch.getKeyContent();
+
             //((EditText) findViewById(R.id.edittext_description)).setText(keyContent);
-            if(smsMatch.isDelivery()){
+            if(smsMatch.isDelivery()&&keyContent!=null){
                 /**
                  * 匹配【菜鸟驿站】
                  * 利用正则表达式匹配，()内匹配为一个group。Java中正则表达式转义符匹配为\\
@@ -423,7 +424,7 @@ public class AddActivity extends AppCompatActivity {
                  * group(4)=(.*)
                  */
                 String regex =
-                        "[^\\：*]\\：([^快递]+)[快递]{0,2}.*[\\s\\S]*"
+                        "[^\\：*]\\：([^快递|速运]+)[快递|速运]{0,2}.*[\\s\\S]*"
                         + "[^\\：*]\\：([^前]+).*[\\s\\S]*"
                         + "[^\\：*]\\：(.*)[\\s\\S]*"
                         + "[^\\：*]\\：(.*)[\\s\\S]*";
@@ -431,11 +432,13 @@ public class AddActivity extends AppCompatActivity {
                 Matcher m = p.matcher(keyContent);
                 if (m.find()) {
                     ((EditText) findViewById(R.id.edittext_title)).setText(m.group(1)+"快递");
-                    ((TextView) findViewById(R.id.textview_start_time)).setText(m.group(2));
+                    if(m.group(2).replaceAll("[^!-~]","").length()!=0)
+                        ((TextView) findViewById(R.id.textview_start_time)).setText(m.group(2));
+                    else
+                        ((TextView) findViewById(R.id.textview_start_time)).setText("18:00");
                     ((EditText) findViewById(R.id.edittext_location)).setText(m.group(3));
-                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4).replaceAll("[^!-~]",""));
+                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4).replaceAll("[^!-~]","").replaceAll("[-]"," "));
                 }
-
             }
         }
     };

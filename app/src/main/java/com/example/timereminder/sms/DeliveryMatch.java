@@ -28,6 +28,7 @@ public class DeliveryMatch {
     private String deliveryNeed;    //取件需求
     private String title;       //
     private boolean hasHandleSMS;       //是否处理标记
+    private boolean handleSuccess;
 
     DeliveryMatch(String SMSText, int deliveryType) {   //将短信内容和快递类别匹配到类（初始化类）
         this.SMSText = SMSText;
@@ -38,10 +39,11 @@ public class DeliveryMatch {
         deliveryNeed = null;
         title = null;
         hasHandleSMS = false;
+        handleSuccess=false;
+        setKeyContent();
     }
 
     public String getKeyContent() {     //获取关键的信息（属性）。将setKeyContent()更改结果综合
-        setKeyContent();
         return "快递名称：" + companyName + "\n" + "取货时间：" + deliveryTime + "\n"
                 + "取货地点：" + deliveryLocation + "\n" + "取货所需：" + deliveryNeed + "\n";
     }
@@ -111,6 +113,7 @@ public class DeliveryMatch {
             deliveryTime = m.group(3);
             deliveryLocation = m.group(2);
             deliveryNeed = "取货码" + m.group(4);
+            handleSuccess=true;
         } else {
             System.out.println("【菜鸟驿站】匹配失败");
         }
@@ -137,6 +140,7 @@ public class DeliveryMatch {
                 deliveryTime = m.group(3);
                 deliveryLocation = m.group(4);
                 deliveryNeed = "取货码--" + m.group(1);
+                handleSuccess=true;
             } else {
                 System.out.println("【云喇叭】匹配失败");
             }
@@ -151,6 +155,7 @@ public class DeliveryMatch {
                 deliveryTime = m.group(2);
                 deliveryLocation = m.group(3);
                 deliveryNeed = "取货码--" + m.group(1);
+                handleSuccess=true;
             } else {
                 System.out.println("【云喇叭】匹配失败");
             }
@@ -175,6 +180,7 @@ public class DeliveryMatch {
             deliveryTime = m.group(2);
             deliveryLocation = m.group(3);
             deliveryNeed = "取货码--" + m.group(4);
+            handleSuccess=true;
         } else {
             System.out.println("【EMS快递】匹配失败");
         }
@@ -200,6 +206,7 @@ public class DeliveryMatch {
             deliveryTime = m.group(4);
             deliveryLocation = m.group(3);
             deliveryNeed = "取货码--" + m.group(1);
+            handleSuccess=true;
         } else {
             System.out.println("【妈妈驿站】匹配失败");
         }
@@ -220,6 +227,7 @@ public class DeliveryMatch {
             companyName = "顺丰速运";
             deliveryLocation = m.group(1);
             deliveryNeed = m.group(2);
+            handleSuccess=true;
         } else {
             System.out.println("【顺丰速运】匹配失败");
         }
@@ -244,6 +252,7 @@ public class DeliveryMatch {
             deliveryTime = m.group(4);
             deliveryLocation = m.group(3);
             deliveryNeed = m.group(2);
+            handleSuccess=true;
         } else {
             System.out.println("【微快递】匹配失败");
         }
@@ -264,6 +273,7 @@ public class DeliveryMatch {
             companyName = "顺丰快递";
             deliveryTime = m.group(1);
             deliveryLocation = m.group(2);
+            handleSuccess=true;
         } else {
             System.out.println("【顺丰速运】匹配失败");
         }
@@ -282,10 +292,11 @@ public class DeliveryMatch {
         Matcher m = p.matcher(SMSText);
         if (m.find()) {
             //System.out.println(m.group(0));
-            companyName = m.group(3);
+            companyName = m.group(3)+"快递";
             //deliveryTime = m.group(4);
             deliveryLocation = m.group(2);
             deliveryNeed = "取货码--" + m.group(1);
+            handleSuccess=true;
         } else {
             System.out.println("【微快递】匹配失败");
         }
@@ -296,5 +307,9 @@ public class DeliveryMatch {
         setKeyContent();
         title = "您有" + companyName + "待取货";
         return title;
+    }
+
+    public boolean isSuccess(){
+        return handleSuccess;
     }
 }

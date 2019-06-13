@@ -170,8 +170,10 @@ public class SMSMatch {
                 keyContent = "ERROR:识别结果为普通短信!";
             } else {
                 DeliveryMatch deliveryMatch = new DeliveryMatch(SMSText, type);
-                keyContent = deliveryMatch.getKeyContent(); //获取关键的信息（属性）。将setKeyContent()更改结果综合
-                title = deliveryMatch.getTitle();           //title = "您有" + companyName + "待取货"
+                if(deliveryMatch.isSuccess()){
+                    keyContent = deliveryMatch.getKeyContent(); //获取关键的信息（属性）。将setKeyContent()更改结果综合
+                    title = deliveryMatch.getTitle();           //title = "您有" + companyName + "待取货"
+                }
             }
             hasHandleSMS = true;
         }
