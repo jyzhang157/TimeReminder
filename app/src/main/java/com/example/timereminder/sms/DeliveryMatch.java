@@ -154,7 +154,7 @@ public class DeliveryMatch {
                 companyName = "苏宁易购";
                 deliveryTime = m.group(2);
                 deliveryLocation = m.group(3);
-                deliveryNeed = "取货码--" + m.group(1);
+                deliveryNeed = "取货码" + m.group(1);
                 handleSuccess=true;
             } else {
                 System.out.println("【云喇叭】匹配失败");
@@ -179,7 +179,7 @@ public class DeliveryMatch {
             companyName = m.group(1) + "快递";
             deliveryTime = m.group(2);
             deliveryLocation = m.group(3);
-            deliveryNeed = "取货码--" + m.group(4);
+            deliveryNeed = "取货码" + m.group(4);
             handleSuccess=true;
         } else {
             System.out.println("【EMS快递】匹配失败");
@@ -205,7 +205,7 @@ public class DeliveryMatch {
             companyName = m.group(2) + "快递";
             deliveryTime = m.group(4);
             deliveryLocation = m.group(3);
-            deliveryNeed = "取货码--" + m.group(1);
+            deliveryNeed = "取货码" + m.group(1);
             handleSuccess=true;
         } else {
             System.out.println("【妈妈驿站】匹配失败");
@@ -295,7 +295,7 @@ public class DeliveryMatch {
             companyName = m.group(3)+"快递";
             //deliveryTime = m.group(4);
             deliveryLocation = m.group(2);
-            deliveryNeed = "取货码--" + m.group(1);
+            deliveryNeed = "取货码" + m.group(1);
             handleSuccess=true;
         } else {
             System.out.println("【微快递】匹配失败");

@@ -11,10 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TaskDatabaseHelper<E extends TaskMessage> {
-
-    //private List<E> database;
-
-    public TaskDatabaseHelper(/*Class<E> modelClass*/){
+    public TaskDatabaseHelper(){
         //TODO:每次从数据库中获取相应的数据，读入到database中
         //database= LitePal.findAll(modelClass);
     }
@@ -26,39 +23,40 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
             data.save();
         }
     }
+    //向数据库中添加事件
     public static <E extends TaskMessage> void addData(E data) {
         //TODO:考虑添加判断条件，用于判断数据库中是否存在已有的数据
         //database.add(data);
         data.save();
     }
-
+    //获得所有数据
     public static <E extends TaskMessage> List<E> getAllData(Class<E> modelClass){
         //TODO:从数据库中读取所有数据
         return LitePal.findAll(modelClass);
     }
-
+    //查找数据
     public static <E extends TaskMessage> List<E> findData(Class<E> modelClass,String... conditions){
         //TODO:读取想要的数据，需要思考用什么形式实现，目前考虑使用数据库中的查询形式
         return LitePal.where(conditions).find(modelClass);
     }
-
+    //得到表中第一个数据
     public static <E extends TaskMessage> E getFirstData(Class<E> modelClass){
         return LitePal.findFirst(modelClass);
     }
-
+    //从数据库中删除数据
     public static <E extends TaskMessage> void deleteData(E data){
         data.delete();
     }
-
+    //更新数据
     public static <E extends TaskMessage> void updateData(E data){
         //TODO:更新数据库，每次数据库修改均需要调用
         data.save();
     }
-
+    //更新数据（重载）
     public static <E extends TaskMessage> void updateData(E data ,long id){
         data.update(id);
     }
-
+    //按时间顺序获得所有数据
     public static <E extends TaskMessage>
     List<E> getAllDataInTimeOrder(
             Class<E> modelClass,
@@ -69,7 +67,7 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         else
             return LitePal.order("m_time desc").find(modelClass);
     }
-
+    //按时间顺序获得指定事件范围数据
     public static <E extends TaskMessage>
     List<E> findDataInTimeOrder(
             Class<E> modelClass,
@@ -94,7 +92,7 @@ public class TaskDatabaseHelper<E extends TaskMessage> {
         //Log.e("筛选时间",taskList.toString());
         return taskList;
     }
-
+    //按地点获得事件
     public static <E extends TaskMessage> List<E> findDataWithLocation(Class<E> modelClass,String location){
         return LitePal.where("m_location like",location).order("m_time asc").find(modelClass);
     }

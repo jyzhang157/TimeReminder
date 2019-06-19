@@ -437,7 +437,7 @@ public class AddActivity extends AppCompatActivity {
                     else
                         ((TextView) findViewById(R.id.textview_start_time)).setText("18:00");
                     ((EditText) findViewById(R.id.edittext_location)).setText(m.group(3));
-                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4).replaceAll("[^!-~]","").replaceAll("[-]"," "));
+                    ((EditText) findViewById(R.id.express_code)).setText(m.group(4).replaceAll("[^!-~]",""));
                 }
             }
         }
