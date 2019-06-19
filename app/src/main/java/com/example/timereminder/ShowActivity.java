@@ -95,7 +95,7 @@ public class ShowActivity extends AppCompatActivity {
         findViewById(R.id.express_code).setFocusable(false);
 
         ((TextView)findViewById(R.id.textview_title)).setText("查看事件");
-
+//返回按钮事件
         ImageButton exit = (ImageButton) findViewById(R.id.button_exit);/*更改返回按钮图标*/
         exit.setImageResource(R.drawable.ic_arrow_back_black_24dp);
         exit.setOnClickListener(new View.OnClickListener() {
@@ -104,125 +104,11 @@ public class ShowActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+//保存按钮属性
         ImageButton save = (ImageButton) findViewById(R.id.button_ok);/*隐藏保存按钮*/
         save.setVisibility(View.INVISIBLE);
         save.setClickable(false);
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(ShowActivity.this,"提醒事件已保存",Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent();
-////                intent.putExtra("item_return","Task add");
-//                setResult(RESULT_OK,intent);
-//                if(!exp.isChecked()){
-//                    mTask=new TaskMessage();
-//                    Date date=convertStringToDate(
-//                            String.format(Locale.getDefault(),"%s %s",
-//                                    startdate.getText().toString(),
-//                                    starttime.getText().toString())
-//                    );
-//                    Date edate=convertStringToDate(
-//                            String.format(Locale.getDefault(),"%s %s",
-//                                    enddate.getText().toString(),
-//                                    endtime.getText().toString())
-//                    );
-//                    if(issue.getText()!=null)
-//                        mTask.setName(issue.getText().toString());
-//                    if(date!=null)
-//                        mTask.setTime(date);
-//                    if(edate!=null)
-//                        mTask.setEndTime(edate);
-//                    if(location.getText()!=null)
-//                        mTask.setLocation(location.getText().toString());
-//                    if(descrip.getText()!=null)
-//                        mTask.setDescription(descrip.getText().toString());
-//                    mTask.save();
-//                    //Toast.makeText(AddActivity.this,"提醒事件已保存",Toast.LENGTH_SHORT).show();
-//                    intent.putExtra("item_return",mTask.getTime().toString());
-//                    Log.d("show time of task",mTask.getTime().toString());
-//                }
-//                else{
-//                    mExpress=new ExpressMessage();
-//                    Date date=convertStringToDate(
-//                            String.format(Locale.getDefault(),"%s %s",
-//                                    startdate.getText().toString(),
-//                                    starttime.getText().toString())
-//                    );
-//                    Date edate=convertStringToDate(
-//                            String.format(Locale.getDefault(),"%s %s",
-//                                    enddate.getText().toString(),
-//                                    endtime.getText().toString())
-//                    );
-//                    if(issue.getText()!=null)
-//                        mExpress.setName(issue.getText().toString());
-//                    if(date!=null)
-//                        mExpress.setTime(date);
-//                    if(edate!=null)
-//                        mExpress.setEndTime(edate);
-//                    if(location.getText()!=null)
-//                        mExpress.setLocation(location.getText().toString());
-//                    if(descrip.getText()!=null)
-//                        mExpress.setDescription(descrip.getText().toString());
-//                    if(expcode.getText()!=null)
-//                        mExpress.setCode(Integer.parseInt(expcode.getText().toString()));
-//                    mExpress.save();
-//                    intent.putExtra("item_return",mTask.getTime().toString());
-//                    Log.d("show time of task",mTask.getTime().toString());
-//                }
-//                intent.putExtra("item_return","Hello MainActivity");
-//                setResult(RESULT_OK,intent);
-//                finish();
-//            }
-//        });
-
-//
-//        exp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked)
-//                    expcode.setVisibility(View.VISIBLE);
-//                else
-//                    expcode.setVisibility(View.GONE);
-//            }
-//        });
-
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(MainActivity.class,EditActivity.class)
-//            }
-//        });
-
-
-//        startdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog(START_DATE_DIALOG);
-//            }
-//        });
-//
-//        enddate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog(END_DATE_DIALOG);
-//            }
-//        });
-//
-//        starttime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog(START_TIME_DIALOG);
-//            }
-//        });
-//
-//        endtime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog(END_TIME_DIALOG);
-//            }
-//        });
-
+//设置界面中的各个文本框
         Intent intent= getIntent();
         mTask=(TaskMessage)intent.getParcelableExtra("task_message");
         mExpress=(ExpressMessage)intent.getParcelableExtra("express_message");
@@ -262,6 +148,7 @@ public class ShowActivity extends AppCompatActivity {
                     expcode.setText(mExpress.getCode());
             }
         }
+        //更新时间显示
         startDateDisplay();
         startTimeDisplay();
         endDateDisplay();
@@ -270,6 +157,7 @@ public class ShowActivity extends AppCompatActivity {
 //        enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mYear,mMonth+1,mDay));
 //        starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour,mMinute));
 //        endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mHour+1,mMinute));
+        //编辑按钮事件
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +169,7 @@ public class ShowActivity extends AppCompatActivity {
                 startActivityForResult(pass,5);//5返回数据
             }
         });
-
+        //删除按钮事件
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +187,7 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
     }
-
+//活动返回时触发事件
     @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
         EditText issue = (EditText) findViewById(R.id.edittext_title);/*事件标题*/
@@ -307,6 +195,7 @@ public class ShowActivity extends AppCompatActivity {
         EditText code=(EditText)findViewById(R.id.express_code);
         EditText descrip = (EditText) findViewById(R.id.edittext_description);/*备注*/
         switch (requestCode%(0xffff+1)){
+            //编辑活动返回
             case 5:
                 if(resultCode==RESULT_OK) {
                     mTask=(TaskMessage)data.getParcelableExtra("task_message_return");
@@ -356,7 +245,7 @@ public class ShowActivity extends AppCompatActivity {
             default:
         }
     }
-
+//用于申请定时启动通知栏
     private void sentToAlart(Intent data) {
         TaskMessage mTask;
         ExpressMessage mExpress;
@@ -386,7 +275,7 @@ public class ShowActivity extends AppCompatActivity {
             mAlarmManager.set(AlarmManager.RTC_WAKEUP, mExpress.getTime().getTime(), sender);
         }
     }
-
+//格式化String到Date
     private Date convertStringToDate(String str){
         Date date=new Date();
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.getDefault());
@@ -398,111 +287,32 @@ public class ShowActivity extends AppCompatActivity {
         return date;
     }
 
-//    private void showNormalDialog(){
-//        final AlertDialog.Builder normalDialog = new AlertDialog.Builder(ShowActivity.this);
-//        normalDialog.setMessage("放弃编辑此活动?");
-//        normalDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Intent intent = new Intent();
-//                intent.putExtra("item_return","Hello FirstActivity");
-//                setResult(RESULT_CANCELED,intent);
-//                finish();
-//            }
-//        });
-//        normalDialog.setNegativeButton("取消",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        //...To-do
-//                    }
-//                });
-//        normalDialog.show();
-//    }
-//
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//        switch (id) {
-//            case START_DATE_DIALOG:
-//                return new DatePickerDialog(this, mStartDateListener, mStartTime.getYear()+1900, mStartTime.getMonth(),mStartTime.getDate());
-//            case START_TIME_DIALOG:
-//                return new TimePickerDialog(this, mStartTimeListener, mStartTime.getHours(),mStartTime.getMinutes(),true);
-//            case END_DATE_DIALOG:
-//                return new DatePickerDialog(this, mEndDateListener, mEndTime.getYear()+1900, mEndTime.getMonth(),mEndTime.getDate());
-//            case END_TIME_DIALOG:
-//                return new TimePickerDialog(this, mEndTimeListener, mEndTime.getHours(),mEndTime.getMinutes(),true);
-//        }
-//        return null;
-//    }
 
     public void startDateDisplay() {
         TextView startdate = (TextView) findViewById(R.id.textview_start_date);
         startdate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mStartTime.getYear()+1900,mStartTime.getMonth()+1,mStartTime.getDate()));
         Log.d("Start time",mStartTime.toString());
     }
-//    private DatePickerDialog.OnDateSetListener mStartDateListener = new DatePickerDialog.OnDateSetListener() {
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//            mStartTime.setYear(year-1900);
-//            mStartTime.setMonth(monthOfYear);
-//            mStartTime.setDate(dayOfMonth);
-//
-//            startDateDisplay();
-//            if(mEndTime.before(mStartTime))
-//            {
-//                mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
-//                endDateDisplay();
-//                endTimeDisplay();
-//            }
-//        }
-//    };
+
 
     public void startTimeDisplay() {
         TextView starttime = (TextView) findViewById(R.id.textview_start_time);
         starttime.setText(String.format(Locale.getDefault(),"%02d:%02d",mStartTime.getHours(),mStartTime.getMinutes()));
     }
-//    private TimePickerDialog.OnTimeSetListener mStartTimeListener = new TimePickerDialog.OnTimeSetListener() {
-//        @Override
-//        public  void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//            mStartTime.setHours(hourOfDay);
-//            mStartTime.setMinutes(minute);
-//            startTimeDisplay();
-//            if(mEndTime.before(mStartTime))
-//            {
-//                mEndTime = new Date(mStartTime.getTime() + TimeUnit.HOURS.toMillis(1));
-//                endDateDisplay();
-//                endTimeDisplay();
-//            }
-//        }
-//    };
+
 
     public void endDateDisplay() {
         TextView enddate = (TextView) findViewById(R.id.textview_end_date);
         enddate.setText(String.format(Locale.getDefault(),"%04d-%02d-%02d",mEndTime.getYear()+1900,mEndTime.getMonth()+1,mEndTime.getDate()));
         Log.d("End time",mEndTime.toString());
     }
-//    private DatePickerDialog.OnDateSetListener mEndDateListener = new DatePickerDialog.OnDateSetListener() {
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//            mEndTime.setYear(year-1900);
-//            mEndTime.setMonth(monthOfYear);
-//            mEndTime.setDate(dayOfMonth);
-//            endDateDisplay();
-//        }
-//    };
+
 
     public void endTimeDisplay() {
         TextView endtime = (TextView) findViewById(R.id.textview_end_time);
         endtime.setText(String.format(Locale.getDefault(),"%02d:%02d",mEndTime.getHours(),mEndTime.getMinutes()));
     }
-//    private TimePickerDialog.OnTimeSetListener mEndTimeListener = new TimePickerDialog.OnTimeSetListener() {
-//        @Override
-//        public  void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//            mEndTime.setHours(hourOfDay);
-//            mEndTime.setMinutes(minute);
-//            endTimeDisplay();
-//        }
-//    };
+//将显示模式改为快递事件
     private void changeToExpressMode(){
     findViewById(R.id.layout_endtime).setVisibility(View.GONE);
     findViewById(R.id.express_layout).setVisibility(View.VISIBLE);
@@ -510,7 +320,7 @@ public class ShowActivity extends AppCompatActivity {
     ((TextView)findViewById(R.id.time_name)).setText("取件时间");
     ((Switch) findViewById(R.id.switch_express)).setChecked(true);
 }
-
+//讲显示模式改为普通事件
     private void changeToTaskMode(){
         findViewById(R.id.layout_endtime).setVisibility(View.VISIBLE);
         findViewById(R.id.express_layout).setVisibility(View.GONE);

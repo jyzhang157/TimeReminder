@@ -414,15 +414,6 @@ public class AddActivity extends AppCompatActivity {
 
             //((EditText) findViewById(R.id.edittext_description)).setText(keyContent);
             if(smsMatch.isDelivery()&&keyContent!=null){
-                /**
-                 * 匹配【菜鸟驿站】
-                 * 利用正则表达式匹配，()内匹配为一个group。Java中正则表达式转义符匹配为\\
-                 * [^\\】*] 匹配除了“】”外所有字符，\\】匹配一次“】”，[您的]{0,2} 匹配“您”、“的”各0~2次
-                 * group(1)=([^快递]+) 匹配除了“快递”外的字符大于等于1次，[快递]{0,2} 匹配“快”、“递”各0~2次
-                 * group(2)=([^\\,\\，]+) 匹配除了“，”、“,”外所有字符大于等于1次
-                 * group(3)=(.*) 贪婪匹配除\n、\r外所有字符
-                 * group(4)=(.*)
-                 */
                 String regex =
                         "[^\\：*]\\：([^快递|速运]+)[快递|速运]{0,2}.*[\\s\\S]*"
                         + "[^\\：*]\\：([^前]+).*[\\s\\S]*"
@@ -444,4 +435,4 @@ public class AddActivity extends AppCompatActivity {
     };
 
 
-    }
+}

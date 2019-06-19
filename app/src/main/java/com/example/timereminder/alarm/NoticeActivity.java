@@ -33,7 +33,9 @@ public class NoticeActivity extends BroadcastReceiver {
             notificationManager.createNotificationChannel(channel);
         }
     }
-    @Override
+
+    
+  @Override
     public void onReceive(Context context, Intent intent) {
         createNotificationChannel(context);
         String task=(String) intent.getStringExtra("task_message_name");

@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
-
+//设置布局
     protected void initView() {
         setContentView(R.layout.activity_main);
 
@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        //对Pager进行设置
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mNotificationFragment = new notificationFragment());
         mFragmentList.add(mCalendarFragment = new calendarFragment());
@@ -133,22 +134,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent=new Intent(MainActivity.this, AddActivity.class);
                 intent.putExtra("date",getSettingTime());
                 startActivityForResult(intent,1);
-//                // 注册AlarmManager的定时服务
-//                Intent intent=new Intent();// Constants.ACITON_REMIND是自定义的一个action
-//
-//                // 使用Reminder实体的ID作为PendingIntent的requestCode可以保证PendingIntent的唯一性
-//                PendingIntent pi=PendingIntent.getBroadcast(MainActivity.this, 0, intent,
-//                        PendingIntent.FLAG_UPDATE_CURRENT);
-//                // 设定的时间是Reminder实体中封装的时间
-//                Notification notification=new NotificationCompat.Builder(MainActivity.this,CHANNEL_ID)
-//                        .setContentTitle("ceshi")
-//                        .setContentText("ceshineirong")
-//                        .setWhen(System.currentTimeMillis()+1000)
-//                        .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-//                        .setContentIntent(pi)
-//                        .setAutoCancel(true)
-//                        .build();
-//                mNotificationManager.notify(0,notification);
+
             }
         });
         updateAllDateInView();
@@ -164,7 +150,7 @@ public class MainActivity extends BaseActivity {
         super.onStart();
         updateAllDateInView();
     }
-
+//接受活动返回数据
     @Override
     public void onActivityResult(int requestCode, int resultCode , Intent data){
         switch (requestCode%(0xffff+1)){
@@ -188,7 +174,7 @@ public class MainActivity extends BaseActivity {
             default:
         }
     }
-
+//用于触发通知栏事件
     private void sentToAlart(Intent data){
         TaskMessage mTask;
         ExpressMessage mExpress;
@@ -218,7 +204,7 @@ public class MainActivity extends BaseActivity {
             mAlarmManager.set(AlarmManager.RTC_WAKEUP, mExpress.getTime().getTime(), sender);
         }
     }
-
+//删除通知栏
     private void deleteAlart(Intent data){
         TaskMessage mTask;
         ExpressMessage mExpress;
@@ -240,7 +226,7 @@ public class MainActivity extends BaseActivity {
             mAlarmManager.cancel(sender);
         }
     }
-
+//当事件更新时调用以更新所有的视图
     public void updateAllDateInView(){
         if(mUpdateNotification!=null)
             mUpdateNotification.onUpdate();
